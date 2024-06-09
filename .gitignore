@@ -59,6 +59,7 @@ build/
 *.log
 *.sql
 *.sqlite
+*.properties
 
 # OS generated files #
 ######################
