@@ -1,12 +1,16 @@
 package edu.biblioteca.bookflow.Model;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper=true)
 @Table(name="editora")
-public class Editora {
+public class Editora extends RepresentationModel<Editora> {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

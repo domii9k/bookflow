@@ -2,13 +2,17 @@ package edu.biblioteca.bookflow.Model;
 
 import java.sql.Date;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper=true)
 @Table(name="emprestimo")
-public class Emprestimo {
+public class Emprestimo extends RepresentationModel<Emprestimo> {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +39,7 @@ public class Emprestimo {
     private UsuarioSistema codRespEmprestimo;
 
     @ManyToOne
-    @JoinColumn(name="resp_dev", nullable = false)
+    @JoinColumn(name="resp_dev")
     private UsuarioSistema codRespDevolucao;
 
     @Column(name="data_emp", nullable = false)
