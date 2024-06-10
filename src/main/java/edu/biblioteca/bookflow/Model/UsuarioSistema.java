@@ -13,22 +13,22 @@ public class UsuarioSistema {
     @Column(name = "cod_usuario")
     private Long codUsuario;
 
-    @Column(name = "nome", nullable = false, length = 99)
+    @Column(name = "nome", nullable = false)
     private String nome;
 
-    @Column(name = "sobrenome", nullable = false, length = 99)
+    @Column(name = "sobrenome", nullable = false)
     private String sobrenome;
 
-    @Column(name = "email", nullable = false, unique = true, length = 255)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "senha", nullable = false, length = 20)
+    @Column(name = "senha", nullable = false)
     private String senha;
 
     @Column(name = "is_adm", columnDefinition = "INTEGER DEFAULT 1")
     private Integer isAdm = 1;
 
-    @Column(name = "cpf", nullable = false, unique = true, length = 15)
+    @Column(name = "cpf", nullable = false, unique = true)
     private String cpf;
 
     @Column(name = "status", columnDefinition = "INTEGER DEFAULT 0")

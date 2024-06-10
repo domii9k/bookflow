@@ -12,7 +12,7 @@ public class Cursos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cod_curso")
-    private Integer codCurso;
+    private Long codCurso;
 
     @Column(name = "descricao", nullable = false)
     private String descricao;

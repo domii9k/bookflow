@@ -18,7 +18,7 @@ public class Livro {
     @Column(name = "titulo", nullable = false)
     private String titulo;
 
-    @Column(name = "isbn")
+    @Column(name = "isbn", nullable = false, unique = true)
     private String isbn;
 
     @Column(name = "patrimonio", unique = true, nullable = false)

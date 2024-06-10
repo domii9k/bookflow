@@ -11,7 +11,7 @@ public class Editora {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="cod_editora")
-    private Integer codEditora;
+    private Long codEditora;
 
     @Column(name="nome_fantasia", nullable = false)
     private String nomeFantasia;

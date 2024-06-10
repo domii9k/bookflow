@@ -13,7 +13,7 @@ public class Emprestimo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="cod_emp")
-    private Integer codEmprestimo;
+    private Long codEmprestimo;
 
     @Column(name = "cancelado", columnDefinition = "INTEGER DEFAULT 0")
     private Integer cancelado=0;

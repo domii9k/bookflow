@@ -6,10 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 //import org.springframework.web.client.HttpServerErrorException;
 
 import edu.biblioteca.bookflow.Model.Cursos;
@@ -22,19 +19,60 @@ public class CursosController {
     @Autowired
     private CursosRepository cursosRepository;
 
+    // metodo para listar todos os cursos
     @GetMapping
     public ResponseEntity<List<Cursos>> getCursos() {
         return ResponseEntity.ok(cursosRepository.findAll());
     }
 
     @GetMapping("/{codCurso}")
-    public ResponseEntity<Optional<Cursos>> getCurso(@PathVariable Integer codCurso){
+    public ResponseEntity<Optional<Cursos>> getCurso(@PathVariable Long codCurso) {
         try {
             return ResponseEntity.ok(cursosRepository.findById(codCurso));
         } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+
+    @SuppressWarnings("rawtypes")
+    @PostMapping
+    public ResponseEntity cadastraCurso(@RequestBody Cursos curso) {
+        try {
+            cursosRepository.save(curso);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
             return null;
         }
-       
+
+    }
+
+    @SuppressWarnings("rawtypes")
+    @PutMapping("/{codCurso}")
+    public ResponseEntity atualizaCurso(@PathVariable Long codCurso, @RequestBody Cursos curso) {
+
+        try {
+            curso.setCodCurso(codCurso);
+            cursosRepository.save(curso);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
+    @SuppressWarnings("rawtypes")
+    @DeleteMapping("/{codCurso}")
+    public ResponseEntity deletaCurso(@PathVariable Long codCurso){
+
+        try {
+            Cursos curso = cursosRepository.findById(codCurso).get();
+            cursosRepository.delete(curso);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
 }
