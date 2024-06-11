@@ -3,13 +3,15 @@ package edu.biblioteca.bookflow.DTO;
 import jakarta.validation.constraints.NotNull;
 import java.sql.Date;
 
+import edu.biblioteca.bookflow.Model.*;
+
 public record EmprestimoRecordDTO(
         @NotNull Integer cancelado,
-        @NotNull Long codLivro,
-        @NotNull Long codAluno,
-        @NotNull Long codCurso,
-        @NotNull Long codRespEmprestimo,
-        @NotNull Long codRespDevolucao,
+        @NotNull Livro codLivro,
+        @NotNull Aluno codAluno,
+        @NotNull Cursos codCurso,
+        @NotNull UsuarioSistema codRespEmprestimo,
+        UsuarioSistema codRespDevolucao,
         @NotNull Date dataEmprestimo,
         @NotNull Date dataDevolucao,
         @NotNull Integer atrasado) {

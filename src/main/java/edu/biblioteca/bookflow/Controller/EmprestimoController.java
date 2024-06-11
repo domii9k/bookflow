@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import edu.biblioteca.bookflow.Repository.EmprestimoRepository;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/emprestimos")
@@ -120,17 +122,15 @@ public class EmprestimoController {
      * 
      * @param EmprestimoRecordDTO empretimoDTO - objeto a ser criado no sistema
      **/
-    @PostMapping("/emprestimos")
-    public ResponseEntity<Emprestimo> createEmprestimo(EmprestimoRecordDTO emprestimoDto) {
-
+    @PostMapping
+    public ResponseEntity<Emprestimo> createEmprestimo(@RequestBody @Valid EmprestimoRecordDTO emprestimoDTO) {
+        Emprestimo emprestimo = new Emprestimo();
         try {
-            if (emprestimoDto.codAluno() == null && emprestimoDto.codCurso() == null && emprestimoDto.codLivro() == null
-                    && emprestimoDto.codRespEmprestimo() == null && emprestimoDto.dataDevolucao() == null) {
-
-            }
+            BeanUtils.copyProperties(emprestimoDTO, emprestimo);
         } catch (Exception e) {
-            // TODO: handle exception
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(null);
         }
-        return null;
+        return ResponseEntity.status(HttpStatus.CREATED).body(emprestimoRepository.save(emprestimo));
     }
 }
