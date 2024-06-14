@@ -26,7 +26,7 @@ public class Editora extends RepresentationModel<Editora> {
     @Column(name="site")
     private String site;
 
-    @Column(name = "status", columnDefinition = "INTEGER DEFAULT 1")
+    @Column(name = "stts_ativo", columnDefinition = "INTEGER DEFAULT 1")
     private Integer status = 1;
 
 }

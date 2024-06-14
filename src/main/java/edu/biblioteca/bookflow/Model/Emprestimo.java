@@ -39,7 +39,7 @@ public class Emprestimo extends RepresentationModel<Emprestimo> {
     private UsuarioSistema codRespEmprestimo;
 
     @ManyToOne
-    @JoinColumn(name="resp_dev")
+    @JoinColumn(name="resp_dev", nullable = true)
     private UsuarioSistema codRespDevolucao;
 
     @Column(name="data_emp", nullable = false)
@@ -48,7 +48,7 @@ public class Emprestimo extends RepresentationModel<Emprestimo> {
     @Column(name="data_dev", nullable = false)
     private Date dataDevolucao;
 
-    @Column(name="atrasado", columnDefinition = "INTEGER DEFAULT 0")
-    private Integer atrasado=0;
+    @Column(name="atrasado", columnDefinition = "stts_devolucao DEFAULT 'ativo'")
+    private StatusDevolucaoEnum atrasado;
    
 }

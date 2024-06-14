@@ -56,7 +56,7 @@ public class Livro extends RepresentationModel<Livro>{
     @Column(name = "stts_emprestado", columnDefinition = "INTEGER DEFAULT 0")
     private Integer sttsEmprestado = 0;
 
-    @Column(name = "status", columnDefinition = "INTEGER DEFAULT 1")
+    @Column(name = "stts_ativo", columnDefinition = "INTEGER DEFAULT 1")
     private Integer status = 1;
 
 }

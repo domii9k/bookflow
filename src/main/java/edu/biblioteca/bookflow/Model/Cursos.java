@@ -21,7 +21,7 @@ public class Cursos extends RepresentationModel<Cursos>{
     @Column(name = "descricao", nullable = false)
     private String descricao;
 
-    @Column(name = "status", columnDefinition = "INTEGER DEFAULT 1")
+    @Column(name = "stts_ativo", columnDefinition = "INTEGER DEFAULT 1")
     private Integer status = 1;
 
 }

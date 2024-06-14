@@ -20,7 +20,7 @@ public class Aluno extends RepresentationModel<Aluno> {
     @Column(name = "nome_completo", nullable = false)
     private String nomeCompleto;
 
-    @Column(name = "ra", unique = true, nullable = false)
+    @Column(name = "ra", nullable = false)
     private String ra;
 
     @Column(name = "cpf", unique = true, nullable = false)
@@ -39,7 +39,7 @@ public class Aluno extends RepresentationModel<Aluno> {
     @Column(name = "tel_2")
     private String tel2;
 
-    @Column(name = "status", columnDefinition = "INTEGER DEFAULT 1")
+    @Column(name = "stts_ativo", columnDefinition = "INTEGER DEFAULT 1")
     private Integer status = 1;
 
     @Column(name = "cep", nullable = false)

@@ -29,12 +29,12 @@ public class UsuarioSistema extends RepresentationModel<UsuarioSistema>{
     @Column(name = "senha", nullable = false)
     private String senha;
 
-    @Column(name = "is_adm", columnDefinition = "INTEGER DEFAULT 1")
-    private Integer isAdm = 1;
+    @Column(name = "is_adm", columnDefinition = "permissao DEFAULT 0")
+    private PermissoesEnum isAdm;
 
     @Column(name = "cpf", nullable = false, unique = true)
     private String cpf;
 
-    @Column(name = "status", columnDefinition = "INTEGER DEFAULT 0")
-    private Integer status = 0;
+    @Column(name = "stts_ativo", columnDefinition = "INTEGER DEFAULT 1")
+    private Integer status = 1;
 }
