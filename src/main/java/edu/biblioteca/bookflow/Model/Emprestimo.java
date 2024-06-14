@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=true)
 @Table(name="emprestimo")
 public class Emprestimo extends RepresentationModel<Emprestimo> {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="cod_emp")
@@ -33,13 +33,13 @@ public class Emprestimo extends RepresentationModel<Emprestimo> {
     @ManyToOne
     @JoinColumn(name="cod_curso", nullable = false)
     private Cursos codCurso;
-    
+
     @ManyToOne
     @JoinColumn(name="resp_emp", nullable = false)
     private UsuarioSistema codRespEmprestimo;
 
     @ManyToOne
-    @JoinColumn(name="resp_dev", nullable = true)
+    @JoinColumn(name="resp_dev")
     private UsuarioSistema codRespDevolucao;
 
     @Column(name="data_emp", nullable = false)
@@ -48,7 +48,7 @@ public class Emprestimo extends RepresentationModel<Emprestimo> {
     @Column(name="data_dev", nullable = false)
     private Date dataDevolucao;
 
-    @Column(name="atrasado", columnDefinition = "stts_devolucao DEFAULT 'ativo'")
-    private StatusDevolucaoEnum atrasado;
-   
+    @Column(name="atrasado", columnDefinition = "INTEGER DEFAULT 0", nullable = false)
+    private Integer atrasado=0;
+
 }

@@ -12,8 +12,8 @@ public record EmprestimoDTO(
         @NotNull Aluno codAluno,
         @NotNull Cursos codCurso,
         @NotNull UsuarioSistema codRespEmprestimo,
-        @Nullable UsuarioSistema codRespDevolucao,
+        UsuarioSistema codRespDevolucao,
         @NotNull Date dataEmprestimo,
         @NotNull Date dataDevolucao,
-        @NotNull StatusDevolucaoEnum atrasado) {
+        @NotNull Integer atrasado) {
 }
