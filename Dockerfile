@@ -1,8 +1,16 @@
-FROM maven:3.8.5-openjdk-17 AS build
+FROM ubuntu:latest AS build
+
+RUN apt-get update
+RUN apt-get install openjdk-17-jdk -y
 COPY . .
-RUN mvn clean package -DiskipTests
+
+RUN apt-get install maven -y
+RUN mvn clean install
 
 FROM openjdk:17-jdk-slim
-COPY --from=build /tag/bookflow-0.0.1-SNAPSHOT.jar bookflow.jar
-EXPOSE 9000
-ENTRYPOINT ["java","-jar","bookflow.jar"]
+
+EXPOSE 8080
+
+COPY --from=build /target/bookflow-1.0.0.jar app.jar
+
+ENTRYPOINT [ "java", "-jar", "bookflow.jar" ]
