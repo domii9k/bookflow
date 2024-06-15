@@ -149,8 +149,7 @@ public class EmprestimoController {
      * Método para deletar um empréstimo:
      * Em suma, é fundamental que apenas este objeto seja passível de deleção,
      * visto que os outros podem depender de informações de outras tabelas e afete,
-     * assim,
-     * o desempenho e segurança do sistema
+     * assim, o desempenho e segurança do sistema
      * 
      * @return Dependendo do comportamento da requisição, a api retornará três
      *         respostas diferentes

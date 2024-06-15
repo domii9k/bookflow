@@ -2,6 +2,7 @@ package edu.biblioteca.bookflow.DTO;
 
 import jakarta.validation.constraints.NotNull;
 import java.sql.Date;
+import java.time.LocalDate;
 
 import edu.biblioteca.bookflow.Model.*;
 import io.micrometer.common.lang.Nullable;
@@ -13,7 +14,7 @@ public record EmprestimoDTO(
         @NotNull Cursos codCurso,
         @NotNull UsuarioSistema codRespEmprestimo,
         UsuarioSistema codRespDevolucao,
-        @NotNull Date dataEmprestimo,
-        @NotNull Date dataDevolucao,
+        @NotNull LocalDate dataEmprestimo,
+        @NotNull LocalDate dataDevolucao,
         @NotNull Integer atrasado) {
 }

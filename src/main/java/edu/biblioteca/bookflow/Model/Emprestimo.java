@@ -1,6 +1,6 @@
 package edu.biblioteca.bookflow.Model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import org.springframework.hateoas.RepresentationModel;
 
@@ -43,10 +43,10 @@ public class Emprestimo extends RepresentationModel<Emprestimo> {
     private UsuarioSistema codRespDevolucao;
 
     @Column(name="data_emp", nullable = false)
-    private Date dataEmprestimo;
+    private LocalDate dataEmprestimo;
 
     @Column(name="data_dev", nullable = false)
-    private Date dataDevolucao;
+    private LocalDate dataDevolucao;
 
     @Column(name="atrasado", columnDefinition = "INTEGER DEFAULT 0", nullable = false)
     private Integer atrasado=0;
