@@ -10,7 +10,7 @@ public record UsuarioSistemaDTO(
         @NotBlank String sobrenome,
         @NotBlank @Email String email,
         @NotBlank String senha,
-        @NotNull PermissoesEnum isAdm,
+        @NotNull Integer isAdm,
         @NotBlank String cpf,
         @NotNull Integer status) {
 }
