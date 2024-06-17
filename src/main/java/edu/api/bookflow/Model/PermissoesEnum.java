@@ -2,8 +2,8 @@ package edu.api.bookflow.Model;
 
 public enum PermissoesEnum {
 
-    ADMINISTRADOR("administrador"),
-    GERENTE("gerente");
+    ADMINISTRADOR("ADMINISTRADOR"),
+    GERENTE("GERENTE");
 
     private String descricao;
 

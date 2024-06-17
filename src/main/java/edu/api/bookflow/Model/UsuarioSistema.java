@@ -29,7 +29,7 @@ public class UsuarioSistema extends RepresentationModel<UsuarioSistema>{
     @Column(name = "senha", nullable = false)
     private String senha;
 
-    @Column(name = "is_adm", columnDefinition = "permissao DEFAULT 0")
+    @Column(name = "is_adm", columnDefinition = "permissao DEFAULT 'GERENTE'")
     private PermissoesEnum isAdm;
 
     @Column(name = "cpf", nullable = false, unique = true)
