@@ -8,8 +8,6 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
-import edu.biblioteca.bookflow.Model.*;
-
 public record EmprestimoDTO(
         @NotNull Integer cancelado,
         @NotNull Livro codLivro,
