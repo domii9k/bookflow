@@ -1,3 +1,4 @@
+/*
 package edu.api.bookflow.Configuration;
 
 import org.springframework.context.annotation.Bean;
@@ -15,24 +16,28 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 import java.util.List;
 
+*/
 /**
  * Esta classe permite a configuração do CORS para casos de testes da aplicação
  * Futuramente será necessário, e MUITO recomendado,
  * aplicar medidas de segurança mais robustas, como armazenamento seguro de senhas
  * e políticas de CORS adequadas.
- * **/
+ * **//*
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    /**
+    */
+/**
      * Adicionando um usuário teste para as requisições
      * !não usar em produção!
      *
      * Esse usuário ficará em memória para possíveis testes
      * com o {noop} ele indica que a senha não possui nenhuma codificação
      * e seu papel é "user"
-     * **/
+     * **//*
+
     @Bean
     InMemoryUserDetailsManager users(){
         return new InMemoryUserDetailsManager(
@@ -43,10 +48,12 @@ public class SecurityConfig {
         );
     }
 
-    /**
+    */
+/**
      * Configurando cadeias de filtro de segurança
      * @return http - retorna a configuração de segurança
-     * **/
+     * **//*
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -57,10 +64,12 @@ public class SecurityConfig {
                 .build();
     }
 
-    /**
+    */
+/**
      * Configurando política de CORS
      *
-     * **/
+     * **//*
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -77,3 +86,4 @@ public class SecurityConfig {
     }
 
 }
+*/
