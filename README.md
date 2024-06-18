@@ -13,7 +13,6 @@ O BookFlow é um sistema de gerenciamento de bibliotecas escolares desenvolvido 
 
 ### Ferramentas de Desenvolvimento
 
-- **Figma**: Plataforma colaborativa para design de interfaces e protótipos.
 - **Java SpringBoot**: Framework para desenvolvimento do backend.
 - **PostgreSQL**: Sistema de gerenciamento de banco de dados relacional.
 - **Linguagem de Programação Java**: Linguagem principal para o desenvolvimento do sistema.
