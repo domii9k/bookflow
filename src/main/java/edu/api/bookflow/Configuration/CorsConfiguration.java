@@ -12,7 +12,7 @@ public class CorsConfiguration implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-        .allowedOrigins("https://127.0.0.1:3000") //Mudar para "https://bookflow-phi.vercel.app" após finalização do projeto
+        .allowedOrigins("https://bookflow-phi.vercel.app", "https://localhost:3000")
         .allowedMethods("GET", "POST", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT", "PUT");
     }
 }
