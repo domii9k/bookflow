@@ -17,5 +17,6 @@ public record EmprestimoDTO(
         UsuarioSistema codRespDevolucao,
         @NotNull LocalDate dataEmprestimo,
         @NotNull LocalDate dataDevolucao,
-        @NotNull Integer atrasado) {
+        @NotNull Integer atrasado,
+        String observacao) {
 }
