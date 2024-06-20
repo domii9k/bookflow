@@ -51,4 +51,6 @@ public class Emprestimo extends RepresentationModel<Emprestimo> {
     @Column(name="atrasado", columnDefinition = "INTEGER DEFAULT 0", nullable = false)
     private Integer atrasado=0;
 
+    @Column(name="observacao", columnDefinition = "TEXT")
+    private String observacao;
 }
