@@ -51,7 +51,7 @@ public class LivroController {
                 for (Livro livro : listaLivro) {
                     Long codLivro = livro.getCodLivro(); // pegamos o codigo desse aluno
 
-                    livro.add(linkTo(methodOn(AlunoController.class).getAluno(codLivro))
+                    livro.add(linkTo(methodOn(LivroController.class).getLivro(codLivro))
                             .withSelfRel()); // e adicionamos um link para a lista de todos os alunos
                 }
                 return ResponseEntity.status(HttpStatus.OK).body(new RespostaHttp<>("Livros encontrados.", listaLivro));
