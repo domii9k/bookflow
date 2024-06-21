@@ -24,7 +24,7 @@ import jakarta.validation.Valid;
 public class EmprestimoController {
 
     @Autowired
-    EmprestimoRepository emprestimoRepository;
+    private EmprestimoRepository emprestimoRepository;
 
     /**
      * Método para retornar apenas um emprestimo, seja ele cancelado ou nao
