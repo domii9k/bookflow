@@ -1,6 +1,5 @@
 package edu.api.bookflow.Controller;
 
-import edu.api.bookflow.Model.Aluno;
 import edu.api.bookflow.Model.Livro;
 import edu.api.bookflow.Model.RespostaHttp;
 import edu.api.bookflow.Repository.LivroRepository;
@@ -44,7 +43,7 @@ public class LivroController {
     }
 
     @GetMapping
-    public ResponseEntity<RespostaHttp<Aluno>> getAllLivros(){
+    public ResponseEntity<RespostaHttp<Livro>> getAllLivros(){
         List<Livro> listaLivro = livroRepository.findAll(); // puxamos toda a lista de alunos do
         // repositorio
         try {
@@ -55,14 +54,16 @@ public class LivroController {
                     livro.add(linkTo(methodOn(AlunoController.class).getAluno(codLivro))
                             .withSelfRel()); // e adicionamos um link para a lista de todos os alunos
                 }
-
+                return ResponseEntity.status(HttpStatus.OK).body(new RespostaHttp<>("Livros encontrados.", listaLivro));
+            } else{
+                return ResponseEntity.status(HttpStatus.OK).body(new RespostaHttp<>("Nenhum livro Encontrado.", null));
             }
         } catch (Exception e) { // tratamento de captura de erro
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new RespostaHttp<>("Erro ao procurar o Livro", null));
         } // fim try/catch
-        return ResponseEntity.status(HttpStatus.OK).body(new RespostaHttp<>("Nenhum livro Encontrado.", null));
+
     }
     
 }
