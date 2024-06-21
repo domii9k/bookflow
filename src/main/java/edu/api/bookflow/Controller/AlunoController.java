@@ -26,7 +26,7 @@ public class AlunoController {
     private AlunoRepository alunoRepository;
 
     @GetMapping("/{codAluno}")
-    public ResponseEntity<Object> getAluno(@PathVariable Long codAluno){
+    public ResponseEntity<Object> getAluno(@PathVariable Long codAluno) {
         Optional<Aluno> aluno = alunoRepository.findById(codAluno);
 
         try {
@@ -44,7 +44,7 @@ public class AlunoController {
     }
 
     @GetMapping
-    public ResponseEntity<RespostaHttp<Aluno>> getAllAlunos(){
+    public ResponseEntity<RespostaHttp<Aluno>> getAllAlunos() {
         List<Aluno> listaAluno = alunoRepository.findAll(); // puxamos toda a lista de alunos do
         // repositorio
         try {
@@ -55,14 +55,17 @@ public class AlunoController {
                     aluno.add(linkTo(methodOn(AlunoController.class).getAluno(codAluno))
                             .withSelfRel()); // e adicionamos um link para a lista de todos os alunos
                 }
+                return ResponseEntity.status(HttpStatus.OK).body(new RespostaHttp<>("Lista de alunos encontrada.", listaAluno));
 
+            } else {
+                return ResponseEntity.status(HttpStatus.OK).body(new RespostaHttp<>("Nenhum Aluno Encontrado.", null));
             }
         } catch (Exception e) { // tratamento de captura de erro
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new RespostaHttp<>("Erro ao procurar o aluno", null));
         } // fim try/catch
-        return ResponseEntity.status(HttpStatus.OK).body(new RespostaHttp<>("Nenhum Aluno Encontrado.", null));
+
     }
 
 
