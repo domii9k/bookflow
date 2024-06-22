@@ -48,7 +48,7 @@ public class Emprestimo extends RepresentationModel<Emprestimo> {
     @Column(name="data_dev", nullable = false)
     private LocalDate dataDevolucao;
 
-    @Column(name="atrasado", columnDefinition = "INTEGER DEFAULT 0", nullable = false)
+    @Column(name="atrasado", columnDefinition = "INTEGER DEFAULT 0")
     private Integer atrasado=0;
 
     @Column(name="observacao", columnDefinition = "TEXT")
