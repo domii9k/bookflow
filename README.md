@@ -7,7 +7,7 @@ Este README aborda algumas instruções de execução do código do Projeto Book
 1) O banco de dados deste projeto foi subido no [Supa Base](https://supabase.com/), mas o “script” do banco pode ser encontrado dentro do diretório do projeto, no pacote SQL.
 2) O projeto em si está no [Render](https://render.com/), então não será necessário clonar o código em sua máquina local. Mas, caso queira, será necessário executar o Script no PostgreSQL e configurar as propriedades do projeto localmente. (Tutorial em HELP.md)
 > Como o deploy do projeto está no Render, pode acontecer das requisições demorarem um minuto ou mais, devido à inatividade que o site o coloca.
-### Ferramentas
+### 🛠 Ferramentas
 Para as requisições, foi utilizado o PostMan, mas pode ser utilizado o “software” da sua preferência. Caso queira utilizar um navegador para as requisições GET, recomenda-se o Firefox, pois ele traz as requisições visivelmente mais atraentes.
 
 ## Executando Remotamente:
@@ -15,7 +15,7 @@ Link da API do projeto: https://bookflow-3gbn.onrender.com
 > Essa rota sozinha não possui nenhuma página (no momento) e trará uma página de erro.\
 >O projeto está em desenvolvimento, então algumas requisições podem não estar disponíveis. Por isso, este README irá ensinar apenas requisições da página de **Empréstimos** (GET, POST, PUT e DELETE). E, para as outras, apenas GET.
 
- #### GET
+ #### 🔁 GET
 
 No PostMan, selecione a requisição GET e insira os seguintes links disponíveis para GET:
 >https://bookflow-3gbn.onrender.com/emprestimos \
@@ -26,7 +26,7 @@ No PostMan, selecione a requisição GET e insira os seguintes links disponívei
 Nele, caso bem sucedido, será buscado e retornado todos os empréstimos, cursos, alunos ou livros já cadastrados no banco.
 >Note que, ao voltar essas informações, outras informações sensíveis que, num projeto em produção, é altamente perigoso e proibido, também serão exibidas. Estes registros não incluem informações de pessoas reais, apenas informações testes. Novas configurações de segurança serão adicionadas ao longo do projeto.
 
-#### POST
+#### ⬆ POST
 
 No PostMan, selecione a requisição POST e insira o seguinte link:
 > https://bookflow-3gbn.onrender.com/emprestimos
@@ -59,7 +59,7 @@ Para inserir um ‘item’, segue o JSON necessário para cadastrar um emprésti
 >As variáveis _cancelado_ e _atrasado_ aceitam SOMENTE valores 0 ou 1.
 
 Caso bem sucedido, será retornado o emprestimo criado em formado JSON.
-#### PUT 
+#### ⤴ PUT 
 No PostMan, selecione a opção PUT e insira o seguinte _link_:
 >https://bookflow-3gbn.onrender.com/emprestimos/{codEmprestimo} \
 > Em codEmprestimo coloque o código que deseja alterar, desde que ele exista entre os registros.
@@ -92,7 +92,7 @@ Insira o mesmo JSON, porém adicone a variavel do codigo do emprestimo:
 }
 ```
 Caso bem sucedido, será retornado o emprestimo alterado em formado JSON.
-#### DELETE
+#### ✖ DELETE
 No PostMan, selecione a opção de requisição DELETE e insira o seguinte link:
 >https://bookflow-3gbn.onrender.com/emprestimos/{codEmprestimo} \
 > Em codEmprestimo coloque o código que deseja deletar, desde que ele exista entre os registros.
