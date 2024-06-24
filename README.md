@@ -5,7 +5,7 @@ Este README aborda algumas instruções de execução do código do Projeto Book
 ### ✔ Considerações:
 
 1) O banco de dados deste projeto foi subido no [Supa Base](https://supabase.com/), mas o “script” do banco pode ser encontrado dentro do diretório do projeto, no pacote SQL.
-2) O projeto em si está no [Render](https://render.com/), então não será necessário clonar o código em sua máquina local. Mas, caso queira, será necessário executar o Script no PostgreSQL e configurar as propriedades do projeto localmente. (Tutorial em HELP.md)
+2) O projeto em si está no [Render](https://render.com/), então não será necessário clonar o código em sua máquina local. Mas, caso queira, será necessário executar o Script no PostgreSQL e configurar as propriedades do projeto localmente.
 > Como o deploy do projeto está no Render, pode acontecer das requisições demorarem um minuto ou mais, devido à inatividade que o site o coloca.
 ### 🛠 Ferramentas
 Para as requisições, foi utilizado o PostMan, mas pode ser utilizado o “software” da sua preferência. Caso queira utilizar um navegador para as requisições GET, recomenda-se o Firefox, pois ele traz as requisições visivelmente mais atraentes.
@@ -107,4 +107,4 @@ Caso bem sucedido, deve aparecer a seguinte mensagem:
 ```
 
 Pronto! Requisições realizadas com sucesso. \
-Veja o README do front para informações sobre o mesmo na branch _front_ e o HELP.md dentro desta branch para instruções de execução do código localmente.
+Veja o README do front para informações sobre o mesmo na branch _front_.
