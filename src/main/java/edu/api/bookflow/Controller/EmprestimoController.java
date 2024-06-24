@@ -56,7 +56,7 @@ public class EmprestimoController {
      * voltado para listar apenas os ativos na pagina de emprestimos
      **/
     @GetMapping
-    public ResponseEntity<RespostaHttp<Emprestimo>> getAllEmprestimosAtivos() {
+    public ResponseEntity<List<Emprestimo>> getAllEmprestimosAtivos() {
         List<Emprestimo> listaEmprestimos = emprestimoRepository.findAll(); // puxamos toda a lista de emprestimos do
                                                                             // repositorio
 
@@ -72,26 +72,26 @@ public class EmprestimoController {
                         .collect(Collectors.toList());
 
                 if (!emprestimosAtivos.isEmpty()) { // agora continuamos a verificar se os emprestimos ativos estão
-                                                    // diferente de vazio
+                                                    // diferentes de vazio
                     // retornamos uma resposta de sucesso, juntamente com a lista
                     return ResponseEntity.status(HttpStatus.OK)
-                            .body(new RespostaHttp<>("Empréstimos encontrados.", emprestimosAtivos));
+                            .body(emprestimosAtivos);
                 } else { // senao, retornamos uma mensagem que a solicitação foi feita com sucesso, porém
                          // não foi encontrado nenhum empréstimo ativo.
                     return ResponseEntity.status(HttpStatus.OK)
-                            .body(new RespostaHttp<>("Nenhum empréstimo ATIVO encontrado.", null));
+                            .body(null);
                     // como nao temos nada na lista que esteja ativo, nao retornamos nada
                 }
             } else { // vindo da primeira verificação, aqui retornamos que nenhum empréstimo foi
                      // encontrado, seja ele ativo ou não (cancelado)
                 return ResponseEntity.status(HttpStatus.OK)
-                        .body(new RespostaHttp<>("Nenhum Empréstimo Encontrado.", null)); // nao retornamos nada
+                        .body(null); // nao retornamos nada
             }
         } catch (Exception e) { // se a tratativa não tiver sucesso, aplicamos a tratativa de erro e não
                                 // retornamos nada da lista
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new RespostaHttp<>("Erro ao procurar o empréstimo", null));
+                    .body(null);
         }
     }// fim getAllEmprestimosAtivos
 
@@ -103,7 +103,7 @@ public class EmprestimoController {
      * @return Retorna um erro caso a tratativa indique que nao teve erro, mas que
      *         não hou emprestimo a ser encontrado
      **/
-    public ResponseEntity<RespostaHttp<Emprestimo>> getAllEmprestimos() {
+    public ResponseEntity<List<Emprestimo>> getAllEmprestimos() {
         List<Emprestimo> listaEmprestimo = emprestimoRepository.findAll();
 
         try {
@@ -119,9 +119,9 @@ public class EmprestimoController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new RespostaHttp<>("Erro ao procurar o empréstimo", null));
+                    .body(null);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new RespostaHttp<>("Nenhum Empréstimo Encontrado.", null));
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     /**
@@ -155,7 +155,7 @@ public class EmprestimoController {
      *         respostas diferentes
      **/
     @DeleteMapping("/{codEmprestimo}")
-    public ResponseEntity<RespostaHttp<Emprestimo>> deleteEmprestimo(@PathVariable Long codEmprestimo) {
+    public ResponseEntity<Object> deleteEmprestimo(@PathVariable Long codEmprestimo) {
 
         Optional<Emprestimo> emprestimoOptional = emprestimoRepository.findById(codEmprestimo);
 

@@ -43,7 +43,7 @@ public class AlunoController {
     }
 
     @GetMapping
-    public ResponseEntity<RespostaHttp<Aluno>> getAllAlunos() {
+    public ResponseEntity<List<Aluno>> getAllAlunos() {
         List<Aluno> listaAluno = alunoRepository.findAll(); // puxamos toda a lista de alunos do
         // repositorio
         try {
@@ -54,15 +54,15 @@ public class AlunoController {
                     aluno.add(linkTo(methodOn(AlunoController.class).getAluno(codAluno))
                             .withSelfRel()); // e adicionamos um link para a lista de todos os alunos
                 }
-                return ResponseEntity.status(HttpStatus.OK).body(new RespostaHttp<>("Lista de alunos encontrada.", listaAluno));
+                return ResponseEntity.status(HttpStatus.OK).body(listaAluno);
 
             } else {
-                return ResponseEntity.status(HttpStatus.OK).body(new RespostaHttp<>("Nenhum Aluno Encontrado.", null));
+                return ResponseEntity.status(HttpStatus.OK).body(null);
             }
         } catch (Exception e) { // tratamento de captura de erro
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new RespostaHttp<>("Erro ao procurar o aluno", null));
+                    .body(null);
         } // fim try/catch
 
     }
@@ -85,13 +85,13 @@ public class AlunoController {
 
 
     @DeleteMapping("/{codAluno}")
-    public ResponseEntity<RespostaHttp<Aluno>> deleteAluno(@PathVariable Long codAluno) {
+    public ResponseEntity<List<Aluno>> deleteAluno(@PathVariable Long codAluno) {
         Optional<Aluno> alunoOptional = alunoRepository.findById(codAluno);
 
-        if (alunoOptional.isEmpty()) { //aqui verificamos se o ID solicitado existe
-            //retorna um NOT_FOUND pois verifica que é verdadeiro (true) que o objeto nao existe
+        if (alunoOptional.isEmpty()) { //aqui verificamos se o “ID” solicitado existe
+            //retorna um NOT_FOUND, pois verifica que é verdadeiro (true) que o objeto nao existe
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new RespostaHttp<>("Aluno não encontrado!", null));
+                    .body(null);
         }
 
         try { //iniciamos o tratamento de erros na solicitação
@@ -99,11 +99,11 @@ public class AlunoController {
             Aluno aluno = alunoOptional.get(); //agora precisamos resgatar esse ID
             alunoRepository.delete(aluno); //depois podemos deletá-lo
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(new RespostaHttp<>("Aluno deletado com sucesso", null));
+                    .body(null);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new RespostaHttp<>("Erro ao deletar o aluno", null));
+                    .body(null);
         }
     }
 

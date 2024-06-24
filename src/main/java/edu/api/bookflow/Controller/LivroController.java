@@ -43,7 +43,7 @@ public class LivroController {
     }
 
     @GetMapping
-    public ResponseEntity<RespostaHttp<Livro>> getAllLivros(){
+    public ResponseEntity<List<Livro>> getAllLivros(){
         List<Livro> listaLivro = livroRepository.findAll(); // puxamos toda a lista de alunos do
         // repositorio
         try {
@@ -54,14 +54,14 @@ public class LivroController {
                     livro.add(linkTo(methodOn(LivroController.class).getLivro(codLivro))
                             .withSelfRel()); // e adicionamos um link para a lista de todos os alunos
                 }
-                return ResponseEntity.status(HttpStatus.OK).body(new RespostaHttp<>("Livros encontrados.", listaLivro));
+                return ResponseEntity.status(HttpStatus.OK).body(listaLivro);
             } else{
-                return ResponseEntity.status(HttpStatus.OK).body(new RespostaHttp<>("Nenhum livro Encontrado.", null));
+                return ResponseEntity.status(HttpStatus.OK).body(null);
             }
         } catch (Exception e) { // tratamento de captura de erro
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new RespostaHttp<>("Erro ao procurar o Livro", null));
+                    .body(null);
         } // fim try/catch
 
     }
