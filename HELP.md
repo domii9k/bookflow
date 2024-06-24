@@ -1,3 +1,0 @@
-## Instruções de execução do código
-
-...
