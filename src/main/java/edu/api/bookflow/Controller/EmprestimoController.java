@@ -103,7 +103,7 @@ public class EmprestimoController {
      * @return Retorna um erro caso a tratativa indique que nao teve erro, mas que
      *         não hou emprestimo a ser encontrado
      **/
-    public ResponseEntity<List<Emprestimo>> getAllEmprestimos() {
+    public ResponseEntity<RespostaHttp<Emprestimo>> getAllEmprestimos() {
         List<Emprestimo> listaEmprestimo = emprestimoRepository.findAll();
 
         try {
@@ -119,9 +119,9 @@ public class EmprestimoController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
+                    .body(new RespostaHttp<>("Erro ao procurar o empréstimo", null));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        return ResponseEntity.status(HttpStatus.OK).body(new RespostaHttp<>("Nenhum Empréstimo Encontrado.", null));
     }
 
     /**
