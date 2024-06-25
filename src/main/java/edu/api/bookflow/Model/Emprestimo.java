@@ -1,5 +1,6 @@
 package edu.api.bookflow.Model;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 import org.springframework.hateoas.RepresentationModel;
@@ -42,7 +43,7 @@ public class Emprestimo extends RepresentationModel<Emprestimo> {
     @JoinColumn(name="resp_dev")
     private UsuarioSistema codRespDevolucao;
 
-    @Column(name="data_emp", nullable = false)
+    @Column(name="data_emp", nullable = false, updatable = false)
     private LocalDate dataEmprestimo;
 
     @Column(name="data_dev", nullable = false)
@@ -53,4 +54,10 @@ public class Emprestimo extends RepresentationModel<Emprestimo> {
 
     @Column(name="observacao", columnDefinition = "TEXT")
     private String observacao;
+
+    // este metodo fará com que, no momento da criação do emprestimo, a data atual será automaticamente preenchida
+    @PrePersist
+    protected void onCreate() {
+        this.dataEmprestimo = LocalDate.now();
+    }
 }

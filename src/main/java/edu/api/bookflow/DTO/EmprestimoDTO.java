@@ -15,7 +15,7 @@ public record EmprestimoDTO(
         @NotNull Cursos codCurso,
         @NotNull UsuarioSistema codRespEmprestimo,
         UsuarioSistema codRespDevolucao,
-        @NotNull LocalDate dataEmprestimo,
+        LocalDate dataEmprestimo,
         @NotNull LocalDate dataDevolucao,
         @NotNull Integer atrasado,
         String observacao) {
