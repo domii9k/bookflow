@@ -1,6 +1,6 @@
 ## 📝 Instruções de execução do código
 
-Este README aborda algumas instruções de execução do código do Projeto BookFlow (back-end api). O front-end do projeto pode ser encontrado na branch **_front_**.
+Este README aborda algumas instruções de execução do código do Projeto BookFlow (back-end api). O front-end do projeto pode ser encontrado no repositório [Front End](https://github.com/domii9k/BookFlow-FrontEnd).
 
 ### ✔ Considerações:
 
@@ -107,4 +107,4 @@ Caso bem sucedido, deve aparecer a seguinte mensagem:
 ```
 
 Pronto! Requisições realizadas com sucesso. \
-Veja o README do front para informações sobre o mesmo na branch _front_.
+Veja o README do front para informações sobre o mesmo no repositório [Front End](https://github.com/domii9k/BookFlow-FrontEnd).
