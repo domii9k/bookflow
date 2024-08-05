@@ -1,6 +1,6 @@
 package edu.api.bookflow.Model;
 
-import java.sql.Date;
+
 import java.time.LocalDate;
 
 import org.springframework.hateoas.RepresentationModel;
