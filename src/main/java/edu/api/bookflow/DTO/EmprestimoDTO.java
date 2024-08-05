@@ -9,7 +9,8 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public record EmprestimoDTO(
-        @NotNull Integer cancelado,
+        @NotNull Long codEmprestimo,
+        Integer isCancelado,
         @NotNull Livro codLivro,
         @NotNull Aluno codAluno,
         @NotNull Cursos codCurso,
@@ -17,6 +18,6 @@ public record EmprestimoDTO(
         UsuarioSistema codRespDevolucao,
         LocalDate dataEmprestimo,
         @NotNull LocalDate dataDevolucao,
-        @NotNull Integer atrasado,
+        @NotNull Integer isAtrasado,
         String observacao) {
 }

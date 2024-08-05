@@ -5,8 +5,9 @@ import io.micrometer.common.lang.Nullable;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
-public record AlunoDTO(@NotBlank String nomeCompleto, @NotBlank String ra, @NotBlank String cpf,
+public record AlunoDTO(@Positive Long codAluno, @NotBlank String nomeCompleto, @NotBlank String ra, @NotBlank String cpf,
                        @NotNull Cursos codCurso, @NotBlank @Email String email, @NotBlank String tel, String tel2,
                        @NotNull Integer status, @NotBlank String cep, @NotBlank String endereco) {
 
