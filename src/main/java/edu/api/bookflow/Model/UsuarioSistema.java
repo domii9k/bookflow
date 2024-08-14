@@ -17,22 +17,22 @@ public class UsuarioSistema extends RepresentationModel<UsuarioSistema>{
     @Column(name = "cod_usuario")
     private Long codUsuario;
 
-    @Column(name = "nome", nullable = false)
+    @Column(name = "nome", nullable = false, columnDefinition = "TEXT")
     private String nome;
 
-    @Column(name = "sobrenome", nullable = false)
+    @Column(name = "sobrenome", nullable = false, columnDefinition = "TEXT")
     private String sobrenome;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true, columnDefinition = "TEXT")
     private String email;
 
-    @Column(name = "senha", nullable = false)
+    @Column(name = "senha", nullable = false, columnDefinition = "TEXT")
     private String senha;
 
-    @Column(name = "is_adm", columnDefinition = "INTEGER DEFAULT 0")
-    private Integer isAdm;
+    @Column(name = "tipo_permissao", columnDefinition = "permissao DEFAULT 'BIBLIOTECARIO'")
+    private PermissoesEnum tipoPermissao = PermissoesEnum.BIBLIOTECARIO;
 
-    @Column(name = "cpf", nullable = false, unique = true)
+    @Column(name = "cpf", nullable = false, unique = true, columnDefinition = "TEXT")
     private String cpf;
 
     @Column(name = "stts_ativo", columnDefinition = "INTEGER DEFAULT 1")

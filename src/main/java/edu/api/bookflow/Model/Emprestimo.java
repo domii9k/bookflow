@@ -11,49 +11,44 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper=true)
-@Table(name="emprestimo")
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "emprestimo")
 public class Emprestimo extends RepresentationModel<Emprestimo> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="cod_emp")
+    @Column(name = "cod_emp")
     private Long codEmprestimo;
 
     @Column(name = "cancelado", columnDefinition = "INTEGER DEFAULT 0")
-    private Integer cancelado=0;
+    private Integer cancelado = 0;
 
     @ManyToOne
-    @JoinColumn(name="cod_livro", nullable = false)
+    @JoinColumn(name = "cod_livro", nullable = false, columnDefinition = "INTEGER")
     private Livro codLivro;
 
     @ManyToOne
-    @JoinColumn(name="cod_aluno", nullable = false)
+    @JoinColumn(name = "cod_aluno", nullable = false, columnDefinition = "INTEGER")
     private Aluno codAluno;
 
     @ManyToOne
-    @JoinColumn(name="cod_curso", nullable = false)
-    private Cursos codCurso;
+    @JoinColumn(name = "resp_emp", nullable = false, updatable = false, columnDefinition = "INTEGER")
+    private UsuarioSistema respEmprestimo;
 
-    @ManyToOne
-    @JoinColumn(name="resp_emp", nullable = false)
-    private UsuarioSistema codRespEmprestimo;
-
-    @ManyToOne
-    @JoinColumn(name="resp_dev")
-    private UsuarioSistema codRespDevolucao;
-
-    @Column(name="data_emp", nullable = false, updatable = false)
+    @Column(name = "data_emp", nullable = false, updatable = false, columnDefinition = "DATE DEFAULT CURRENT_DATE")
     private LocalDate dataEmprestimo;
 
-    @Column(name="data_dev", nullable = false)
-    private LocalDate dataDevolucao;
+    @Column(name = "data_prev_devolucao", nullable = false, columnDefinition = "DATE")
+    private LocalDate dataPrevistaDevolucao;
 
-    @Column(name="atrasado", columnDefinition = "INTEGER DEFAULT 0")
-    private Integer atrasado=0;
+    @Column(name = "atrasado", columnDefinition = "INTEGER DEFAULT 0")
+    private Integer atrasado = 0;
 
-    @Column(name="observacao", columnDefinition = "TEXT")
+    @Column(name = "observacao", columnDefinition = "TEXT")
     private String observacao;
+
+    @Column(name = "foi_devolvido", columnDefinition = "INTEGER DEFAULT 0")
+    private Integer foiDevolvido = 0;
 
     // este metodo fará com que, no momento da criação do emprestimo, a data atual será automaticamente preenchida
     @PrePersist

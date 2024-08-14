@@ -1,17 +1,17 @@
 package edu.api.bookflow.Model;
 
+import lombok.Getter;
+
+@Getter
 public enum PermissoesEnum {
 
     ADMINISTRADOR("ADMINISTRADOR"),
-    GERENTE("GERENTE");
+    BIBLIOTECARIO("BIBLIOTECARIO");
 
-    private String descricao;
+    private final String descricao;
 
     PermissoesEnum(String descricao) {
         this.descricao = descricao;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
 }

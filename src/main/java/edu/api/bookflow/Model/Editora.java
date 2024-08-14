@@ -17,13 +17,13 @@ public class Editora extends RepresentationModel<Editora> {
     @Column(name="cod_editora")
     private Long codEditora;
 
-    @Column(name="nome_fantasia", nullable = false)
+    @Column(name="nome_fantasia", nullable = false, columnDefinition = "TEXT")
     private String nomeFantasia;
 
-    @Column(name="endereco")
+    @Column(name="endereco", columnDefinition = "TEXT")
     private String endereco;
 
-    @Column(name="site")
+    @Column(name="site", columnDefinition = "TEXT")
     private String site;
 
     @Column(name = "stts_ativo", columnDefinition = "INTEGER DEFAULT 1")

@@ -16,7 +16,7 @@ public class Categoria extends RepresentationModel<Categoria>{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codCategoria;
 
-    @Column(name="descricao", nullable = false)
+    @Column(name="descricao", nullable = false, columnDefinition = "TEXT")
     private String descricao;
    
     @Column(name = "stts_ativo", columnDefinition = "INTEGER DEFAULT 1")

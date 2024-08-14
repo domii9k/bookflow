@@ -17,7 +17,7 @@ public class Autor extends RepresentationModel<Autor> {
     @Column(name="cod_autor")
     private Long codAutor;
     
-    @Column(name="nome", nullable = false)
+    @Column(name="nome", nullable = false, columnDefinition = "TEXT")
     private String nome;
 
     @Column(name = "stts_ativo", columnDefinition = "INTEGER DEFAULT 1")

@@ -9,7 +9,7 @@ import lombok.Data;
  * 
  */
 @Data // Com a utilização desta anotação, não será
-      // preciso gerar os getters e setters da classe
+      // preciso gerar os getters e ‘setters’ da classe
 public class RespostaHttp<T> {
 
     private String resposta;

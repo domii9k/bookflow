@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=true)
 @Table(name = "curso")
-public class Cursos extends RepresentationModel<Cursos>{
+public class Curso extends RepresentationModel<Curso>{
 
    
     @Id
@@ -18,7 +18,7 @@ public class Cursos extends RepresentationModel<Cursos>{
     @Column(name = "cod_curso")
     private Long codCurso;
 
-    @Column(name = "descricao", nullable = false)
+    @Column(name = "descricao", nullable = false, columnDefinition = "TEXT")
     private String descricao;
 
     @Column(name = "stts_ativo", columnDefinition = "INTEGER DEFAULT 1")

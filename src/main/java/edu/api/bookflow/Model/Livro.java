@@ -3,9 +3,6 @@ package edu.api.bookflow.Model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.math.BigDecimal;
-
 import org.springframework.hateoas.RepresentationModel;
 
 @Data
@@ -19,38 +16,34 @@ public class Livro extends RepresentationModel<Livro>{
     @Column(name = "cod_livro")
     private Long codLivro;
 
-    @Column(name = "titulo", nullable = false)
+    @Column(name = "titulo", nullable = false, columnDefinition = "TEXT")
     private String titulo;
 
-    @Column(name = "isbn", nullable = false, unique = true)
+    @Column(name = "isbn", unique = true, columnDefinition = "TEXT")
     private String isbn;
 
-    @Column(name = "patrimonio", unique = true, nullable = false)
+    @Column(name = "patrimonio", unique = true, nullable = false, columnDefinition = "TEXT")
     private String patrimonio;
 
     @ManyToOne
-    @JoinColumn(name = "cod_curso", nullable = false)
-    private Cursos curso;
+    @JoinColumn(name = "cod_curso", nullable = false, columnDefinition = "INTEGER")
+    private Curso curso;
 
-    @ManyToOne
-    @JoinColumn(name = "cod_categoria", nullable = false)
-    private Categoria categoria;
+    @Column(name = "edicao", columnDefinition = "INTEGER")
+    private Integer edicao;
 
-    @Column(name = "edicao", precision = 2, scale = 0)
-    private BigDecimal edicao;
-
-    @Column(name = "ano", nullable = false)
+    @Column(name = "ano", nullable = false, columnDefinition = "INTEGER")
     private Integer ano;
 
-    @Column(name = "descricao")
+    @Column(name = "descricao", columnDefinition = "TEXT")
     private String descricao;
 
     @ManyToOne
-    @JoinColumn(name = "cod_autor", nullable = false)
+    @JoinColumn(name = "cod_autor", nullable = false, columnDefinition = "INTEGER")
     private Autor autor;
 
     @ManyToOne
-    @JoinColumn(name = "cod_editora", nullable = false)
+    @JoinColumn(name = "cod_editora", nullable = false, columnDefinition = "INTEGER")
     private Editora editora;
 
     @Column(name = "stts_emprestado", columnDefinition = "INTEGER DEFAULT 0")
