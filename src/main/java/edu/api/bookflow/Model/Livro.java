@@ -46,10 +46,10 @@ public class Livro extends RepresentationModel<Livro>{
     @JoinColumn(name = "cod_editora", nullable = false, columnDefinition = "INTEGER")
     private Editora editora;
 
-    @Column(name = "stts_emprestado", columnDefinition = "INTEGER DEFAULT 0")
-    private Integer sttsEmprestado = 0;
+    @Column(name = "stts_emprestado", columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean sttsEmprestado = false;
 
-    @Column(name = "stts_ativo", columnDefinition = "INTEGER DEFAULT 1")
-    private Integer status = 1;
+    @Column(name = "stts_ativo", columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean status = true;
 
 }

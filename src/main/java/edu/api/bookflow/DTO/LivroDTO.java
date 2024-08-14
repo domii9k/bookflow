@@ -17,6 +17,6 @@ public record LivroDTO(
         String descricao,
         @NotNull Long codAutor,
         @NotNull Long codEditora,
-        @NotNull Integer sttsEmprestado,
-        @NotNull Integer statusAtivo) {
+        @NotNull boolean sttsEmprestado,
+        @NotNull boolean statusAtivo) {
 }

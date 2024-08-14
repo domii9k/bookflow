@@ -20,8 +20,8 @@ public class Emprestimo extends RepresentationModel<Emprestimo> {
     @Column(name = "cod_emp")
     private Long codEmprestimo;
 
-    @Column(name = "cancelado", columnDefinition = "INTEGER DEFAULT 0")
-    private Integer cancelado = 0;
+    @Column(name = "cancelado", columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean cancelado = false;
 
     @ManyToOne
     @JoinColumn(name = "cod_livro", nullable = false, columnDefinition = "INTEGER")
@@ -41,14 +41,14 @@ public class Emprestimo extends RepresentationModel<Emprestimo> {
     @Column(name = "data_prev_devolucao", nullable = false, columnDefinition = "DATE")
     private LocalDate dataPrevistaDevolucao;
 
-    @Column(name = "atrasado", columnDefinition = "INTEGER DEFAULT 0")
-    private Integer atrasado = 0;
+    @Column(name = "atrasado", columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean atrasado = false;
 
     @Column(name = "observacao", columnDefinition = "TEXT")
     private String observacao;
 
-    @Column(name = "foi_devolvido", columnDefinition = "INTEGER DEFAULT 0")
-    private Integer foiDevolvido = 0;
+    @Column(name = "foi_devolvido", columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean foiDevolvido = false;
 
     // este metodo fará com que, no momento da criação do emprestimo, a data atual será automaticamente preenchida
     @PrePersist

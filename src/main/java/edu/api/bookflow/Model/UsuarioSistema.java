@@ -35,6 +35,6 @@ public class UsuarioSistema extends RepresentationModel<UsuarioSistema>{
     @Column(name = "cpf", nullable = false, unique = true, columnDefinition = "TEXT")
     private String cpf;
 
-    @Column(name = "stts_ativo", columnDefinition = "INTEGER DEFAULT 1")
-    private Integer status = 1;
+    @Column(name = "stts_ativo", columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean status = true;
 }

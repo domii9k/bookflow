@@ -9,5 +9,5 @@ public record EditoraDTO(
         @NotBlank String nomeFantasia,
         String endereco,
         String site,
-        @NotNull Integer status) {
+        @NotNull boolean status) {
 }

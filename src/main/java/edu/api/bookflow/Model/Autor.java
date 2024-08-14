@@ -20,6 +20,6 @@ public class Autor extends RepresentationModel<Autor> {
     @Column(name="nome", nullable = false, columnDefinition = "TEXT")
     private String nome;
 
-    @Column(name = "stts_ativo", columnDefinition = "INTEGER DEFAULT 1")
-    private Integer status = 1;
+    @Column(name = "stts_ativo", columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean status = true;
 }

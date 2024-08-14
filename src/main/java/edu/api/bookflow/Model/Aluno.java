@@ -39,8 +39,8 @@ public class Aluno extends RepresentationModel<Aluno> {
     @Column(name = "tel_2", columnDefinition = "TEXT")
     private String tel2;
 
-    @Column(name = "stts_ativo", columnDefinition = "INTEGER DEFAULT 1")
-    private Integer status = 1;
+    @Column(name = "stts_ativo", columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean status = true;
 
     @Column(name = "cep", nullable = false, columnDefinition = "TEXT")
     private String cep;

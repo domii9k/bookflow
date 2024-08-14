@@ -14,5 +14,5 @@ public record UsuarioSistemaDTO(
         @NotBlank String senha,
         @NotNull PermissoesEnum tipoPermissao,
         @NotBlank String cpf,
-        @NotNull Integer statusAtivo) {
+        @NotNull boolean statusAtivo) {
 }

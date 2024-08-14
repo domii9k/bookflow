@@ -21,7 +21,7 @@ public class Curso extends RepresentationModel<Curso>{
     @Column(name = "descricao", nullable = false, columnDefinition = "TEXT")
     private String descricao;
 
-    @Column(name = "stts_ativo", columnDefinition = "INTEGER DEFAULT 1")
-    private Integer status = 1;
+    @Column(name = "stts_ativo", columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private boolean status = true;
 
 }
