@@ -12,7 +12,7 @@ public record UsuarioSistemaDTO(
         @NotBlank String sobrenome,
         @NotBlank @Email String email,
         @NotBlank String senha,
-        @NotNull Integer isAdm,
+        @NotNull PermissoesEnum tipoPermissao,
         @NotBlank String cpf,
-        @NotNull Integer status) {
+        @NotNull Integer statusAtivo) {
 }

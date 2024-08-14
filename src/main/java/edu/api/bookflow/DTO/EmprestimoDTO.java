@@ -1,7 +1,7 @@
 package edu.api.bookflow.DTO;
 
 import edu.api.bookflow.Model.Aluno;
-import edu.api.bookflow.Model.Cursos;
+import edu.api.bookflow.Model.Curso;
 import edu.api.bookflow.Model.Livro;
 import edu.api.bookflow.Model.UsuarioSistema;
 import jakarta.validation.constraints.NotNull;
@@ -13,11 +13,10 @@ public record EmprestimoDTO(
         Integer isCancelado,
         @NotNull Livro codLivro,
         @NotNull Aluno codAluno,
-        @NotNull Cursos codCurso,
         @NotNull UsuarioSistema codRespEmprestimo,
-        UsuarioSistema codRespDevolucao,
-        LocalDate dataEmprestimo,
-        @NotNull LocalDate dataDevolucao,
+        @NotNull LocalDate dataEmprestimo,
+        @NotNull LocalDate dataPrevDevolucao,
         @NotNull Integer isAtrasado,
+        Integer foiDevolvido,
         String observacao) {
 }

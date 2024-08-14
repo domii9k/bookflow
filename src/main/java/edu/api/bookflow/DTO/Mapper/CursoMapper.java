@@ -1,29 +1,29 @@
 package edu.api.bookflow.DTO.Mapper;
 
-import edu.api.bookflow.DTO.CursosDTO;
-import edu.api.bookflow.Model.Cursos;
+import edu.api.bookflow.DTO.CursoDTO;
+import edu.api.bookflow.Model.Curso;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CursoMapper {
 
-    public CursosDTO convertToDto(Cursos model) {
+    public CursoDTO convertToDto(Curso model) {
         if (model == null) {
             return null;
         }
-        return new CursosDTO(
+        return new CursoDTO(
                 model.getCodCurso(),
                 model.getDescricao(),
                 model.getStatus()
         );
     }
 
-    public Cursos convertToEntity(CursosDTO dto) {
+    public Curso convertToEntity(CursoDTO dto) {
         if (dto == null) {
             return null;
         }
-        Cursos model = new Cursos();
+        Curso model = new Curso();
         if (dto.codCurso() != null) {
             model.setCodCurso(dto.codCurso());
         }

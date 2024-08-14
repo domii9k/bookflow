@@ -9,15 +9,14 @@ import java.math.BigDecimal;
 public record LivroDTO(
         @Positive Long codLivro,
         @NotBlank String titulo,
-        @NotBlank String isbn,
+        String isbn,
         @NotBlank String patrimonio,
-        Long codCurso,
-        Long codCategoria,
-        BigDecimal edicao,
+        @NotNull Long codCurso,
+        Integer edicao,
         @NotNull Integer ano,
         String descricao,
-        Long codAutor,
-        Long codEditora,
+        @NotNull Long codAutor,
+        @NotNull Long codEditora,
         @NotNull Integer sttsEmprestado,
-        @NotNull Integer status) {
+        @NotNull Integer statusAtivo) {
 }
