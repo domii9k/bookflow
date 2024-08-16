@@ -14,15 +14,14 @@ public class EmprestimoMapper {
         }
         return new EmprestimoDTO(
                 model.getCodEmprestimo(),
-                model.getCancelado(),
+                model.isCancelado(),
                 model.getCodLivro(),
                 model.getCodAluno(),
-                model.getCodCurso(),
-                model.getCodRespEmprestimo(),
-                model.getCodRespDevolucao(),
+                model.getRespEmprestimo(),
                 model.getDataEmprestimo(),
-                model.getDataDevolucao(),
-                model.getAtrasado(),
+                model.getDataPrevistaDevolucao(),
+                model.isFoiDevolvido(),
+                model.isAtrasado(),
                 model.getObservacao()
         );
     }

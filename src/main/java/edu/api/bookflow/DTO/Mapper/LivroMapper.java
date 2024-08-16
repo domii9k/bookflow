@@ -18,14 +18,13 @@ public class LivroMapper {
                 model.getIsbn(),
                 model.getPatrimonio(),
                 model.getCurso().getCodCurso(),
-                model.getCategoria().getCodCategoria(),
                 model.getEdicao(),
                 model.getAno(),
                 model.getDescricao(),
                 model.getAutor().getCodAutor(),
                 model.getEditora().getCodEditora(),
-                model.getSttsEmprestado(),
-                model.getStatus()
+                model.isSttsEmprestado(),
+                model.isStatus()
         );
     }
 

@@ -15,7 +15,7 @@ public class AutorMapper {
         return new AutorDTO(
                 model.getCodAutor(),
                 model.getNome(),
-                model.getStatus()
+                model.isStatus()
         );
     }
 

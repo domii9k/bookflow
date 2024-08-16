@@ -18,9 +18,9 @@ public class UsuarioSistemaMapper {
                 model.getSobrenome(),
                 model.getEmail(),
                 model.getSenha(),
-                model.getIsAdm(),
+                model.getTipoPermissao(),
                 model.getCpf(),
-                model.getStatus()
+                model.isStatus()
         );
     }
 
