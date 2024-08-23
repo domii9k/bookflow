@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 //import org.springframework.web.client.HttpServerErrorException;
 
-import edu.api.bookflow.Model.Cursos;
+import edu.api.bookflow.Model.Curso;
 
 @RestController
 @RequestMapping("/cursos")
@@ -21,12 +21,12 @@ public class CursosController {
 
     // metodo para listar todos os cursos
     @GetMapping
-    public ResponseEntity<List<Cursos>> getCursos() {
+    public ResponseEntity<List<Curso>> getCursos() {
         return ResponseEntity.ok(cursosRepository.findAll());
     }
 
     @GetMapping("/{codCurso}")
-    public ResponseEntity<Optional<Cursos>> getCurso(@PathVariable Long codCurso) {
+    public ResponseEntity<Optional<Curso>> getCurso(@PathVariable Long codCurso) {
         try {
             return ResponseEntity.ok(cursosRepository.findById(codCurso));
         } catch (Exception e) {
@@ -37,7 +37,7 @@ public class CursosController {
 
     @SuppressWarnings("rawtypes")
     @PostMapping
-    public ResponseEntity cadastraCurso(@RequestBody Cursos curso) {
+    public ResponseEntity cadastraCurso(@RequestBody Curso curso) {
         try {
             cursosRepository.save(curso);
             return ResponseEntity.ok().build();
@@ -49,7 +49,7 @@ public class CursosController {
 
     @SuppressWarnings("rawtypes")
     @PutMapping("/{codCurso}")
-    public ResponseEntity atualizaCurso(@PathVariable Long codCurso, @RequestBody Cursos curso) {
+    public ResponseEntity atualizaCurso(@PathVariable Long codCurso, @RequestBody Curso curso) {
 
         try {
             curso.setCodCurso(codCurso);
@@ -66,7 +66,7 @@ public class CursosController {
     public ResponseEntity deletaCurso(@PathVariable Long codCurso){
 
         try {
-            Cursos curso = cursosRepository.findById(codCurso).get();
+            Curso curso = cursosRepository.findById(codCurso).get();
             cursosRepository.delete(curso);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
