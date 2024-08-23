@@ -1,4 +1,4 @@
-package edu.api.bookflow.Configuration;
+package edu.api.bookflow.Configuration.WebConfig;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
