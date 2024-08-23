@@ -34,7 +34,16 @@ public class EmprestimoMapper {
         if (dto.codEmprestimo() != null) {
             model.setCodEmprestimo(dto.codEmprestimo());
         }
-        BeanUtils.copyProperties(dto, model);
+        model.setCancelado(dto.isCancelado());
+        model.setCodLivro(dto.codLivro());
+        model.setCodAluno(dto.codAluno());
+        model.setRespEmprestimo(dto.respEmprestimo());
+        model.setDataEmprestimo(dto.dataEmprestimo());
+        model.setDataPrevistaDevolucao(dto.dataPrevDevolucao());
+        model.setAtrasado(dto.isAtrasado());
+        model.setFoiDevolvido(dto.foiDevolvido());
+        model.setObservacao(dto.observacao());
+
         return model;
     }
 }

@@ -4,19 +4,20 @@ import edu.api.bookflow.Model.Aluno;
 import edu.api.bookflow.Model.Curso;
 import edu.api.bookflow.Model.Livro;
 import edu.api.bookflow.Model.UsuarioSistema;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
 public record EmprestimoDTO(
-        @NotNull Long codEmprestimo,
+        Long codEmprestimo,
         boolean isCancelado,
-        @NotNull Livro codLivro,
-        @NotNull Aluno codAluno,
-        @NotNull UsuarioSistema codRespEmprestimo,
-        @NotNull LocalDate dataEmprestimo,
-        @NotNull LocalDate dataPrevDevolucao,
-        @NotNull boolean isAtrasado,
+        Livro codLivro,
+        Aluno codAluno,
+        UsuarioSistema respEmprestimo,
+        LocalDate dataEmprestimo,
+        LocalDate dataPrevDevolucao,
+        boolean isAtrasado,
         boolean foiDevolvido,
         String observacao) {
 }
