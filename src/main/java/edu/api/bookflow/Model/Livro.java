@@ -47,7 +47,7 @@ public class Livro extends RepresentationModel<Livro>{
     private Editora editora;
 
     @Column(name = "stts_emprestado", columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean sttsEmprestado = false;
+    private boolean sttsEmprestado;
 
     @Column(name = "stts_ativo", columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean status = true;

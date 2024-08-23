@@ -29,7 +29,8 @@ public class UsuarioSistema extends RepresentationModel<UsuarioSistema>{
     @Column(name = "senha", nullable = false, columnDefinition = "TEXT")
     private String senha;
 
-    @Column(name = "tipo_permissao", columnDefinition = "permissao DEFAULT 'BIBLIOTECARIO'")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "permissao", columnDefinition = "TEXT DEFAULT 'BIBLIOTECARIO'")
     private PermissoesEnum tipoPermissao = PermissoesEnum.BIBLIOTECARIO;
 
     @Column(name = "cpf", nullable = false, unique = true, columnDefinition = "TEXT")

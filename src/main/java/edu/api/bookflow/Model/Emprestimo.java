@@ -3,6 +3,7 @@ package edu.api.bookflow.Model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.hateoas.RepresentationModel;
 
 import jakarta.persistence.*;
@@ -38,7 +39,7 @@ public class Emprestimo extends RepresentationModel<Emprestimo> {
     @Column(name = "data_emp", nullable = false, updatable = false, columnDefinition = "DATE DEFAULT CURRENT_DATE")
     private LocalDate dataEmprestimo;
 
-    @Column(name = "data_prev_devolucao", nullable = false, columnDefinition = "DATE")
+    @Column(name = "data_prevista_dev", nullable = false, columnDefinition = "DATE")
     private LocalDate dataPrevistaDevolucao;
 
     @Column(name = "atrasado", columnDefinition = "BOOLEAN DEFAULT FALSE")
