@@ -11,13 +11,13 @@ import java.time.LocalDate;
 
 public record EmprestimoDTO(
         Long codEmprestimo,
-        boolean isCancelado,
+        Boolean isCancelado,
         Livro codLivro,
         Aluno codAluno,
         UsuarioSistema respEmprestimo,
         LocalDate dataEmprestimo,
         LocalDate dataPrevDevolucao,
-        boolean isAtrasado,
-        boolean foiDevolvido,
+        Boolean isAtrasado,
+        Boolean foiDevolvido,
         String observacao) {
 }

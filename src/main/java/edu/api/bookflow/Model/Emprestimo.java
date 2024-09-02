@@ -22,7 +22,7 @@ public class Emprestimo extends RepresentationModel<Emprestimo> {
     private Long codEmprestimo;
 
     @Column(name = "cancelado", columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean cancelado = false;
+    private Boolean cancelado;
 
     @ManyToOne
     @JoinColumn(name = "cod_livro", nullable = false, columnDefinition = "INTEGER")
@@ -43,17 +43,22 @@ public class Emprestimo extends RepresentationModel<Emprestimo> {
     private LocalDate dataPrevistaDevolucao;
 
     @Column(name = "atrasado", columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean atrasado = false;
+    private Boolean atrasado;
 
     @Column(name = "observacao", columnDefinition = "TEXT")
     private String observacao;
 
     @Column(name = "foi_devolvido", columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean foiDevolvido = false;
+    private Boolean foiDevolvido;
 
     // este metodo fará com que, no momento da criação do emprestimo, a data atual será automaticamente preenchida
     @PrePersist
     protected void onCreate() {
-        this.dataEmprestimo = LocalDate.now();
+        if(this.dataEmprestimo==null){
+            this.dataEmprestimo = LocalDate.now();
+        }
+        this.atrasado = false;
+        this.foiDevolvido = false;
+        this.cancelado=false;
     }
 }
