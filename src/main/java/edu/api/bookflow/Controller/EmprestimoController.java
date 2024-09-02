@@ -33,15 +33,26 @@ public class EmprestimoController {
     @Autowired
     private EmprestimoService service;
 
-    @GetMapping
+    /*@GetMapping
     @ResponseStatus(code = HttpStatus.OK)
     public PaginationDTO<EmprestimoDTO> listAll(@RequestParam(name = "pag",defaultValue = "0") @PositiveOrZero int pageNumber,
                                                 @RequestParam(name = "size",defaultValue = "20") @Positive @Max(50) int pageSize,
                                                 @RequestParam(value = "sortBy", defaultValue = "dataEmprestimo") String sortBy,
                                                 @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir) {
         return service.listAll(pageNumber, pageSize, sortBy, sortDir);
-    }
+    }*/
 
+    @GetMapping
+    @ResponseStatus(code = HttpStatus.OK)
+    public PaginationDTO<EmprestimoDTO> listAll(@RequestParam(name = "pag",defaultValue = "0") @PositiveOrZero int pageNumber,
+                                             @RequestParam(name = "size",defaultValue = "10") @Positive @Max(50) int pageSize,
+                                             @RequestParam(value = "sortBy", defaultValue = "dataEmprestimo") String sortBy,
+                                             @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
+                                             @RequestParam(name = "cancelado", defaultValue = "false") Boolean cancelado,
+                                             @RequestParam(name = "foiDevolvido", defaultValue = "false") Boolean foiDevolvido,
+                                             @RequestParam(name = "atrasado", defaultValue = "false") Boolean atrasado){
+        return service.listAll(pageNumber, pageSize, sortBy, sortDir, cancelado, foiDevolvido, atrasado);
+    }
     @GetMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public EmprestimoDTO findById(@PathVariable @NotNull @Positive Long id){
@@ -54,4 +65,15 @@ public class EmprestimoController {
         return service.create(dto);
     }
 
+    @PatchMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public EmprestimoDTO patch(@PathVariable @Positive Long id,@RequestBody EmprestimoDTO emprestimoDTO){return service.patch(id, emprestimoDTO);}
+
+    @PutMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public EmprestimoDTO update(@PathVariable Long id, @RequestBody EmprestimoDTO dto){return service.update(id, dto);}
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id){service.delete(id);}
 }
