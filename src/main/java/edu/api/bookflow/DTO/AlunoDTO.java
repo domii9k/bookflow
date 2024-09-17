@@ -6,8 +6,16 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
-public record AlunoDTO(@Positive Long codAluno, @NotBlank String nomeCompleto, @NotBlank String ra, @NotBlank String cpf,
-                       @NotNull Curso codCurso, @NotBlank @Email String email, @NotBlank String tel, String tel2,
-                       boolean status, @NotBlank String cep, @NotBlank String endereco) {
+public record AlunoDTO(@Positive Long codAluno,
+                       String nomeCompleto,
+                       String ra,
+                       String cpf,
+                       Curso codCurso,
+                       @Email String email,
+                       String tel,
+                       String tel2,
+                       Boolean status,
+                       String cep,
+                       String endereco) {
 
 }
