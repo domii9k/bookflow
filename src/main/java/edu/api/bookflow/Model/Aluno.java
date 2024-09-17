@@ -40,7 +40,7 @@ public class Aluno extends RepresentationModel<Aluno> {
     private String tel2;
 
     @Column(name = "stts_ativo", columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private boolean status = true;
+    private Boolean status = true;
 
     @Column(name = "cep", nullable = false, columnDefinition = "TEXT")
     private String cep;
