@@ -1,7 +1,9 @@
 package edu.api.bookflow.DTO.Mapper;
 
 import edu.api.bookflow.DTO.UsuarioSistemaDTO;
+import edu.api.bookflow.Model.PermissoesEnum;
 import edu.api.bookflow.Model.UsuarioSistema;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -18,13 +20,13 @@ public class UsuarioSistemaMapper {
                 model.getSobrenome(),
                 model.getEmail(),
                 model.getSenha(),
-                model.getTipoPermissao(),
+                model.getPermissao(),
                 model.getCpf(),
                 model.isStatus()
         );
     }
 
-    public UsuarioSistema convertToEntity(UsuarioSistemaDTO dto) {
+    public UsuarioSistema convertToEntity(@NotNull UsuarioSistemaDTO dto) {
         if (dto == null) {
             return null;
         }
