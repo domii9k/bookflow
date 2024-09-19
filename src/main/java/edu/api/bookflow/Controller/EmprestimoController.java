@@ -7,6 +7,7 @@ import edu.api.bookflow.Model.Emprestimo;
 import edu.api.bookflow.Model.RespostaHttp;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -44,36 +45,43 @@ public class EmprestimoController {
 
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
-    public PaginationDTO<EmprestimoDTO> listAll(@RequestParam(name = "pag",defaultValue = "0") @PositiveOrZero int pageNumber,
-                                             @RequestParam(name = "size",defaultValue = "10") @Positive @Max(50) int pageSize,
-                                             @RequestParam(value = "sortBy", defaultValue = "dataEmprestimo") String sortBy,
-                                             @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
-                                             @RequestParam(name = "cancelado", defaultValue = "false") Boolean cancelado,
-                                             @RequestParam(name = "foiDevolvido", defaultValue = "false") Boolean foiDevolvido,
-                                             @RequestParam(name = "atrasado", defaultValue = "false") Boolean atrasado){
+    public PaginationDTO<EmprestimoDTO> listAll(@RequestParam(name = "pag", defaultValue = "0") @PositiveOrZero int pageNumber,
+                                                @RequestParam(name = "size", defaultValue = "10") @Positive @Max(50) int pageSize,
+                                                @RequestParam(value = "sortBy", defaultValue = "dataEmprestimo") String sortBy,
+                                                @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
+                                                @RequestParam(name = "cancelado", defaultValue = "false") Boolean cancelado,
+                                                @RequestParam(name = "foiDevolvido", defaultValue = "false") Boolean foiDevolvido,
+                                                @RequestParam(name = "atrasado", defaultValue = "false") Boolean atrasado) {
         return service.listAll(pageNumber, pageSize, sortBy, sortDir, cancelado, foiDevolvido, atrasado);
     }
+
     @GetMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)
-    public EmprestimoDTO findById(@PathVariable @NotNull @Positive Long id){
+    public EmprestimoDTO findById(@PathVariable @NotNull @Positive Long id) {
         return service.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public EmprestimoDTO create(@RequestBody @Valid EmprestimoDTO dto){
+    public EmprestimoDTO create(@RequestBody @Valid EmprestimoDTO dto) {
         return service.create(dto);
     }
 
     @PatchMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)
-    public EmprestimoDTO patch(@PathVariable @Positive Long id,@RequestBody EmprestimoDTO emprestimoDTO){return service.patch(id, emprestimoDTO);}
+    public EmprestimoDTO updatePatch(@PathVariable @Positive Long id, @RequestBody Map<String, Object> fields) {
+        return service.updatePatch(id, fields);
+    }
 
     @PutMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)
-    public EmprestimoDTO update(@PathVariable Long id, @RequestBody EmprestimoDTO dto){return service.update(id, dto);}
+    public EmprestimoDTO update(@PathVariable Long id, @RequestBody EmprestimoDTO dto) {
+        return service.update(id, dto);
+    }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id){service.delete(id);}
+    public void delete(@PathVariable Long id) {
+        service.delete(id);
+    }
 }
