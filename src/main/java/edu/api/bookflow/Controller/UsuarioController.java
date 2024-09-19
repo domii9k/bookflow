@@ -23,7 +23,7 @@ public class UsuarioSistemaController {
     private UsuarioService service;
 
     /*@GetMapping
-    public List<UsuarioSistema> list(@RequestParam(defaultValue = "true") PermissoesEnum permissao){
+    public List<Usuario> list(@RequestParam(defaultValue = "true") PermissoesEnum permissao){
         return service.teste(permissao);
     }*/
 

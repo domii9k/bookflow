@@ -4,7 +4,9 @@ import edu.api.bookflow.DTO.EmprestimoDTO;
 import edu.api.bookflow.DTO.Mapper.EmprestimoMapper;
 import edu.api.bookflow.DTO.Pagination.PaginationDTO;
 import edu.api.bookflow.Exceptions.NotFoundObject;
+import edu.api.bookflow.Model.Aluno;
 import edu.api.bookflow.Model.Emprestimo;
+import edu.api.bookflow.Model.Livro;
 import edu.api.bookflow.Repository.EmprestimoRepository;
 import edu.api.bookflow.Services.patchHttpRequest.GlobalPatch;
 import jakarta.validation.Valid;
@@ -19,14 +21,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Validated
 @Service
 public class EmprestimoService {
 
 
-    private final EmprestimoRepository emprestimoRepository;
-    private final EmprestimoMapper emprestimoMapper;
+
+    @Autowired
+    private static EmprestimoRepository emprestimoRepository;
+    @Autowired
+    private static EmprestimoMapper emprestimoMapper;
+    @Autowired
+    private static LivroService livroService;
+
+    @Autowired
+    private static AlunoService alunoService;
     @Autowired
     private GlobalPatch patcher;
 
@@ -47,13 +58,13 @@ public class EmprestimoService {
         return new PaginationDTO<>(list, page.getTotalElements(), page.getTotalPages());
     }*/
 
-    public PaginationDTO<EmprestimoDTO> listAll(@RequestParam(name = "pag",defaultValue = "0") @PositiveOrZero int pageNumber,
-                                                @RequestParam(name = "size",defaultValue = "10") @Positive @Max(50) int pageSize,
+    public PaginationDTO<EmprestimoDTO> listAll(@RequestParam(name = "pag", defaultValue = "0") @PositiveOrZero int pageNumber,
+                                                @RequestParam(name = "size", defaultValue = "10") @Positive @Max(50) int pageSize,
                                                 @RequestParam(value = "sortBy", defaultValue = "dataEmprestimo") String sortBy,
                                                 @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
-                                                 @RequestParam(name = "cancelado", defaultValue = "false") Boolean cancelado,
-                                                 @RequestParam(name = "foiDevolvido", defaultValue = "false") Boolean foiDevolvido,
-                                                 @RequestParam(name = "atrasado", defaultValue = "false") Boolean atrasado) {
+                                                @RequestParam(name = "cancelado", defaultValue = "false") Boolean cancelado,
+                                                @RequestParam(name = "foiDevolvido", defaultValue = "false") Boolean foiDevolvido,
+                                                @RequestParam(name = "atrasado", defaultValue = "false") Boolean atrasado) {
 
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Page<Emprestimo> page = emprestimoRepository.findAllByCanceladoAndAtrasado(cancelado, foiDevolvido, atrasado, PageRequest.of(pageNumber, pageSize, sort));
@@ -67,8 +78,8 @@ public class EmprestimoService {
     }
 
     public EmprestimoDTO create(@Valid EmprestimoDTO dto) {
-        validaAlunoOnCreateEmprestimo(dto);
-        validaLivroOnCreateEmprestimo(dto);
+        validaAluno(dto);
+        validaLivro(dto);
         return emprestimoMapper.convertToDto(emprestimoRepository.save(emprestimoMapper.convertToEntity(dto)));
     }
 
@@ -80,28 +91,22 @@ public class EmprestimoService {
                 }).orElseThrow(() -> new NotFoundObject(id));
     }
 
-    public EmprestimoDTO patch(@Positive Long id, @Valid EmprestimoDTO emprestimoIncompleto) {
-        Emprestimo emprestimoExistente = emprestimoRepository.findById(id)
-                .orElseThrow(() -> new NotFoundObject(id));
-        try {
-            patcher.patch(emprestimoExistente, emprestimoMapper.convertToEntity(emprestimoIncompleto));
-            emprestimoRepository.save(emprestimoExistente);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao aplicar o patch no empréstimo.", e);
-        }
-        return emprestimoMapper.convertToDto(emprestimoExistente);
+    public EmprestimoDTO updatePatch(@Positive Long id, Map<String, Object> fields) {
+        Emprestimo emprestimoExistente = emprestimoRepository.findById(id).orElseThrow(() -> new NotFoundObject(id));
+        patcher.globalPatch(fields, emprestimoExistente);
+        //Livro livro = livroService.finById();
+        return emprestimoMapper.convertToDto(this.emprestimoRepository.save(emprestimoExistente));
     }
 
     public void delete(@Positive Long id) {
         emprestimoRepository.delete(emprestimoRepository.findById(id).orElseThrow(() -> new NotFoundObject(id)));
     }
 
-
     /*
      * Metodo utilizado para validar se o aluno já possui um empréstimo ativo
      * @param EmprestimoDTO emprestimoDTO
      * */
-    private void validaAlunoOnCreateEmprestimo(EmprestimoDTO emprestimoDTO) {
+    private static void validaAluno(EmprestimoDTO emprestimoDTO) {
         Long idAluno = emprestimoDTO.codAluno().getCodAluno();
         LocalDate hoje = LocalDate.now();
 
@@ -125,7 +130,7 @@ public class EmprestimoService {
      * Metodo utilizado para validar se o livro já está em um emréstimo ativo
      * @param EmprestimoDTO emprestimoDTO
      * */
-    private void validaLivroOnCreateEmprestimo(EmprestimoDTO emprestimoDTO) {
+    private static void validaLivro(EmprestimoDTO emprestimoDTO) {
         Long idLivro = emprestimoDTO.codLivro().getCodLivro();
         LocalDate hoje = LocalDate.now();
         List<Emprestimo> emprestimosDoLivro = emprestimoRepository.findByCodLivro_CodLivro(idLivro);
