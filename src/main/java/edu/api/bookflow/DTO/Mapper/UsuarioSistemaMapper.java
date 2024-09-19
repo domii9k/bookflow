@@ -1,8 +1,7 @@
 package edu.api.bookflow.DTO.Mapper;
 
-import edu.api.bookflow.DTO.UsuarioSistemaDTO;
-import edu.api.bookflow.Model.PermissoesEnum;
-import edu.api.bookflow.Model.UsuarioSistema;
+import edu.api.bookflow.DTO.UsuarioDTO;
+import edu.api.bookflow.Model.Usuario;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
@@ -10,11 +9,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class UsuarioSistemaMapper {
 
-    public UsuarioSistemaDTO convertToDto(UsuarioSistema model) {
+    public UsuarioDTO convertToDto(Usuario model) {
         if (model == null) {
             return null;
         }
-        return new UsuarioSistemaDTO(
+        return new UsuarioDTO(
                 model.getCodUsuario(),
                 model.getNome(),
                 model.getSobrenome(),
@@ -26,11 +25,11 @@ public class UsuarioSistemaMapper {
         );
     }
 
-    public UsuarioSistema convertToEntity(@NotNull UsuarioSistemaDTO dto) {
+    public Usuario convertToEntity(@NotNull UsuarioDTO dto) {
         if (dto == null) {
             return null;
         }
-        UsuarioSistema model = new UsuarioSistema();
+        Usuario model = new Usuario();
         if (dto.codUsuario() != null) {
             model.setCodUsuario(dto.codUsuario());
         }

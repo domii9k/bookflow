@@ -21,7 +21,7 @@ public class AlunoMapper {
                 aluno.getEmail(),
                 aluno.getTel(),
                 aluno.getTel2(),
-                aluno.isStatus(),
+                aluno.getStatus(),
                 aluno.getCep(),
                 aluno.getEndereco()
         );
