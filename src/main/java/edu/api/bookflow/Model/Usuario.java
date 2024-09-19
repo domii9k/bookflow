@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "usuario_sistema")
-public class UsuarioSistema extends RepresentationModel<UsuarioSistema> {
+public class Usuario extends RepresentationModel<Usuario> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,12 +42,4 @@ public class UsuarioSistema extends RepresentationModel<UsuarioSistema> {
 
     @Column(name = "stts_ativo", columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean status = true;
-
-    public UsuarioSistema(Long codUsuario, String nome, String sobrenome, String cpf, PermissoesEnum permissao) {
-        this.codUsuario = codUsuario;
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.cpf = cpf;
-        this.permissao = permissao;
-    }
 }
