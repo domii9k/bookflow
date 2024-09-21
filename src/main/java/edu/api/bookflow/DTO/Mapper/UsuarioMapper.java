@@ -21,7 +21,7 @@ public class UsuarioSistemaMapper {
                 model.getSenha(),
                 model.getPermissao(),
                 model.getCpf(),
-                model.isStatus()
+                model.getStatus()
         );
     }
 
