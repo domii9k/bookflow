@@ -31,7 +31,7 @@ public class CursoController {
     public PaginationDTO<CursoDTO> findAll(@RequestParam(name = "pag", defaultValue = "0") @PositiveOrZero int pageNumber,
                                            @RequestParam(name = "size", defaultValue = "10") @Positive @Max(50) int pageSize,
                                            @RequestParam(name = "status", defaultValue = "true") Boolean status,
-                                           @RequestParam(value = "sortBy", defaultValue = "nome") String sortBy,
+                                           @RequestParam(value = "sortBy", defaultValue = "descricao") String sortBy,
                                            @RequestParam(value = "sortDir", defaultValue = "asc") String sortDir) {
         return service.findAll(pageNumber, pageSize, status, sortBy, sortDir);
     }

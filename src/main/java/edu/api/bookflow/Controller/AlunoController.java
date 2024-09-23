@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,7 +34,7 @@ public class AlunoController {
         return service.findById(id);
     }
 
-    @PostMapping
+    @PostMapping("/novo")
     @ResponseStatus(code = HttpStatus.CREATED)
     public AlunoDTO create(@RequestBody AlunoDTO dto) {
         return service.create(dto);
@@ -52,4 +53,10 @@ public class AlunoController {
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id){service.delete(id);}
+
+    @PatchMapping("/{id}/desativar")
+    public ResponseEntity<Object> desativar(@PathVariable Long id){return service.desativarAluno(id);}
+
+    @PatchMapping("/{id}/ativar")
+    public ResponseEntity<Object> ativar(@PathVariable Long id){return service.ativarAluno(id);}
 }
