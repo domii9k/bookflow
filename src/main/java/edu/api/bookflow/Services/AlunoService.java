@@ -3,9 +3,11 @@ package edu.api.bookflow.Services;
 import edu.api.bookflow.DTO.AlunoDTO;
 import edu.api.bookflow.DTO.Mapper.AlunoMapper;
 import edu.api.bookflow.DTO.Pagination.PaginationDTO;
+import edu.api.bookflow.Exceptions.ApiHttpResponse;
 import edu.api.bookflow.Exceptions.NotFoundObject;
 import edu.api.bookflow.Model.Aluno;
 import edu.api.bookflow.Repository.AlunoRepository;
+import edu.api.bookflow.Repository.EmprestimoRepository;
 import edu.api.bookflow.Services.patchHttpRequest.GlobalPatch;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -17,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,10 +32,14 @@ import java.util.List;
 @Service
 public class AlunoService {
 
+    @Autowired
     private final AlunoMapper alunoMapper;
+    @Autowired
     private final AlunoRepository alunoRepository;
     @Autowired
     private GlobalPatch patcher;
+    @Autowired
+    private EmprestimoService emprestimoService;
 
     public AlunoService(AlunoMapper alunoMapper, AlunoRepository alunoRepository) {
         this.alunoMapper = alunoMapper;
@@ -80,6 +88,33 @@ public class AlunoService {
 
     public void delete(@Positive Long id) {
         alunoRepository.delete(alunoRepository.findById(id).orElseThrow(() -> new NotFoundObject(id)));
+    }
+
+    public ResponseEntity<Object> ativarAluno(@Positive Long id){
+        Aluno aluno = alunoRepository.findById(id).orElseThrow(()-> new NotFoundObject(id));
+        if(!aluno.getStatus()){
+            aluno.setStatus(true);
+            alunoRepository.save(aluno);
+            return ApiHttpResponse.responseStatus(HttpStatus.OK, "Aluno ativado com sucesso!");
+        }else{
+            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED, "Aluno já se encontra ativo!");
+        }
+    }
+
+    public ResponseEntity<Object> desativarAluno(@Positive Long id){
+      Aluno aluno = alunoRepository.findById(id).orElseThrow(()-> new NotFoundObject(id));
+      boolean bool = emprestimoService.findAlunoByAlunoAndData(aluno);
+
+      if (bool){
+          throw new IllegalStateException("Desculpe! Parece que o aluno possui um empréstimo em aberto e não pode ser desativado!");
+      } else if (!aluno.getStatus()) {
+          return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED, "Aluno já se encontra desativado!");
+      } else {
+          aluno.setStatus(false);
+          alunoRepository.save(aluno);
+          return ApiHttpResponse.responseStatus(HttpStatus.OK, "Aluno desativado com sucesso!");
+
+      }
     }
 
 }

@@ -1,11 +1,14 @@
 package edu.api.bookflow.Services;
 
-import edu.api.bookflow.DTO.Mapper.UsuarioSistemaMapper;
+import edu.api.bookflow.DTO.Mapper.UsuarioFiltradoMapper;
+import edu.api.bookflow.DTO.Mapper.UsuarioMapper;
 import edu.api.bookflow.DTO.Pagination.PaginationDTO;
 import edu.api.bookflow.DTO.UsuarioDTO;
+import edu.api.bookflow.DTO.UsuarioFiltradoDTO;
+import edu.api.bookflow.Exceptions.ApiHttpResponse;
 import edu.api.bookflow.Exceptions.NotFoundObject;
 import edu.api.bookflow.Model.Usuario;
-import edu.api.bookflow.Repository.UsusarioSistemaRepository;
+import edu.api.bookflow.Repository.UsuarioRepository;
 import edu.api.bookflow.Services.patchHttpRequest.GlobalPatch;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -16,35 +19,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @Validated
 @Service
 public class UsuarioService {
 
     @Autowired
-    private static UsusarioSistemaRepository repository;
+    private static UsuarioRepository repository;
     @Autowired
-    private static UsuarioSistemaMapper mapper;
-
+    private static UsuarioMapper mapper;
+    @Autowired
+    private UsuarioFiltradoMapper usuarioFiltradoMapper;
     @Autowired
     private GlobalPatch patch;
 
-    public UsuarioService(UsusarioSistemaRepository repository, UsuarioSistemaMapper mapper) {
+    public UsuarioService(UsuarioRepository repository, UsuarioMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
 
 
-    public PaginationDTO<Map<String, Object>> listMapPagination(
-            @RequestParam(name = "pag") @PositiveOrZero int pageNumber,
-            @RequestParam(name = "size") @Positive @Max(50) int pageSize,
+    public PaginationDTO<UsuarioFiltradoDTO> listMapPagination(
+            @RequestParam(name = "pag", defaultValue = "0") @PositiveOrZero int pageNumber,
+            @RequestParam(name = "size", defaultValue = "10") @Positive @Max(50) int pageSize,
             @RequestParam(name = "status", defaultValue = "true") Boolean status,
             @RequestParam(value = "sortBy", defaultValue = "codUsuario") String sortBy,
             @RequestParam(value = "sortDir", defaultValue = "asc") String sortDir) {
@@ -52,15 +59,8 @@ public class UsuarioService {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Page<Usuario> page = repository.findAllByStatus(status, PageRequest.of(pageNumber, pageSize, sort));
 
-        List<Map<String, Object>> list = page.stream().map(us -> {
-            Map<String, Object> result = new HashMap<>();
-            result.put("codUsuario", us.getCodUsuario());
-            result.put("nome", us.getNome());
-            result.put("sobrenome", us.getSobrenome());
-            result.put("cpf", us.getCpf());
-            result.put("permissao", us.getPermissao());
-            return result;
-        }).toList();
+
+        List<UsuarioFiltradoDTO> list = page.stream().map(usuarioFiltradoMapper::convertToDto).toList();
 
         return new PaginationDTO<>(list, page.getTotalElements(), page.getTotalPages());
     }
@@ -82,7 +82,7 @@ public class UsuarioService {
     }
 
     public UsuarioDTO updatePatch(@Positive Long id, Map<String, Object> fields) {
-        Usuario usuario = repository.findById(id).orElseThrow(()-> new NotFoundObject(id));
+        Usuario usuario = repository.findById(id).orElseThrow(() -> new NotFoundObject(id));
         validaCPFeEmail(usuario);
         patch.globalPatch(fields, usuario);
 
@@ -91,6 +91,28 @@ public class UsuarioService {
 
     public void delete(@Positive Long id) {
         repository.delete(repository.findById(id).orElseThrow(() -> new NotFoundObject(id)));
+    }
+
+    public ResponseEntity<Object> ativarUsuario(@Positive Long id) {
+        Usuario usuario = repository.findById(id).orElseThrow(() -> new NotFoundObject(id));
+        if (!usuario.getStatus()) { // se falso
+            usuario.setStatus(true); // altere para true
+            repository.save(usuario); // salva o objeto
+            return ApiHttpResponse.responseStatus(HttpStatus.OK, "Usuário desativado com sucesso!");
+        } else {
+            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED,"");
+        }
+    }
+
+    public ResponseEntity<Object> desativarUsuario(@Positive Long id){
+        Usuario usuario = repository.findById(id).orElseThrow(() -> new NotFoundObject(id));
+        if(usuario.getStatus()){
+            usuario.setStatus(false);
+            repository.save(usuario);
+            return ApiHttpResponse.responseStatus(HttpStatus.OK, "Usuário desativado com sucesso!");
+        } else{
+            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED,"");
+        }
     }
 
     private static void validaCPFeEmail(Usuario usuario) {

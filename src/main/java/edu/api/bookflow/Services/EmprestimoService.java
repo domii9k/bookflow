@@ -3,10 +3,11 @@ package edu.api.bookflow.Services;
 import edu.api.bookflow.DTO.EmprestimoDTO;
 import edu.api.bookflow.DTO.Mapper.EmprestimoMapper;
 import edu.api.bookflow.DTO.Pagination.PaginationDTO;
+import edu.api.bookflow.Exceptions.ApiHttpResponse;
 import edu.api.bookflow.Exceptions.NotFoundObject;
 import edu.api.bookflow.Model.Aluno;
 import edu.api.bookflow.Model.Emprestimo;
-import edu.api.bookflow.Model.Livro;
+import edu.api.bookflow.Model.Usuario;
 import edu.api.bookflow.Repository.EmprestimoRepository;
 import edu.api.bookflow.Services.patchHttpRequest.GlobalPatch;
 import jakarta.validation.Valid;
@@ -14,6 +15,8 @@ import jakarta.validation.constraints.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -28,14 +31,12 @@ import java.util.Map;
 public class EmprestimoService {
 
 
-
     @Autowired
     private static EmprestimoRepository emprestimoRepository;
     @Autowired
     private static EmprestimoMapper emprestimoMapper;
     @Autowired
     private static LivroService livroService;
-
     @Autowired
     private static AlunoService alunoService;
     @Autowired
@@ -45,18 +46,6 @@ public class EmprestimoService {
         this.emprestimoRepository = emprestimoRepository;
         this.emprestimoMapper = emprestimoMapper;
     }
-
-    /*public PaginationDTO<EmprestimoDTO> listAll(@RequestParam(name = "pag") @PositiveOrZero int pageNumber,
-                                                @RequestParam(name = "size") @Positive @Max(50) int pageSize,
-                                                @RequestParam(value = "sortBy", defaultValue = "data_emp") String sortBy,
-                                                @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir) {
-
-        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-        Page<Emprestimo> page = emprestimoRepository.findAll(PageRequest.of(pageNumber, pageSize, sort));
-        List<EmprestimoDTO> list = page.stream().map(emprestimoMapper::convertToDto).toList();
-
-        return new PaginationDTO<>(list, page.getTotalElements(), page.getTotalPages());
-    }*/
 
     public PaginationDTO<EmprestimoDTO> listAll(@RequestParam(name = "pag", defaultValue = "0") @PositiveOrZero int pageNumber,
                                                 @RequestParam(name = "size", defaultValue = "10") @Positive @Max(50) int pageSize,
@@ -77,10 +66,10 @@ public class EmprestimoService {
         return emprestimoRepository.findById(id).map(emprestimoMapper::convertToDto).orElseThrow(() -> new NotFoundObject(id));
     }
 
-    public EmprestimoDTO create(@Valid EmprestimoDTO dto) {
-        validaAluno(dto);
-        validaLivro(dto);
-        return emprestimoMapper.convertToDto(emprestimoRepository.save(emprestimoMapper.convertToEntity(dto)));
+    public EmprestimoDTO create(@Valid EmprestimoDTO emprestimoDTO) {
+        validaAluno(emprestimoDTO);
+        validaLivro(emprestimoDTO);
+        return emprestimoMapper.convertToDto(emprestimoRepository.save(emprestimoMapper.convertToEntity(emprestimoDTO)));
     }
 
     public EmprestimoDTO update(@Positive Long id, @Valid EmprestimoDTO dto) {
@@ -102,12 +91,25 @@ public class EmprestimoService {
         emprestimoRepository.delete(emprestimoRepository.findById(id).orElseThrow(() -> new NotFoundObject(id)));
     }
 
+    public ResponseEntity<Object> cancelaEmprestimo(@Positive Long id) {
+        Emprestimo emprestimo = emprestimoRepository.findById(id).orElseThrow(() -> new NotFoundObject(id));
+        if (emprestimo.getCancelado()) { //se falso
+            emprestimo.setCancelado(true);
+            emprestimo.setFoiDevolvido(true);
+            emprestimoRepository.save(emprestimo);
+
+            return ApiHttpResponse.responseStatus(HttpStatus.OK, "Empréstimo cancelado com sucesso!");
+        } else {
+            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED, "");
+        }
+    }
+
     /*
      * Metodo utilizado para validar se o aluno já possui um empréstimo ativo
      * @param EmprestimoDTO emprestimoDTO
      * */
     private static void validaAluno(EmprestimoDTO emprestimoDTO) {
-        Long idAluno = emprestimoDTO.codAluno().getCodAluno();
+        Long idAluno = emprestimoDTO.aluno().codAluno();
         LocalDate hoje = LocalDate.now();
 
         // Busca todos os empréstimos do aluno no banco de dados
@@ -120,7 +122,7 @@ public class EmprestimoService {
                 if (emprestimo.getDataPrevistaDevolucao().isBefore(hoje)) {
                     throw new IllegalStateException("O(A) aluno(a) " + emprestimo.getCodAluno().getNomeCompleto() + " possui um empréstimo atrasado! Data de entrega estava prevista para " + emprestimo.getDataPrevistaDevolucao() + ".");
                 } else {
-                    throw new IllegalStateException("O(A) aluno(a) " + emprestimo.getCodAluno().getNomeCompleto() + " já possui um empréstimo ativo com data de entrega prevista para " + emprestimo.getDataPrevistaDevolucao() + ".");
+                    throw new IllegalStateException("O(A) aluno(a) " + emprestimo.getCodAluno().getNomeCompleto() + " possui um empréstimo ativo com data de entrega prevista para " + emprestimo.getDataPrevistaDevolucao() + ".");
                 }
             }
         }
@@ -145,6 +147,11 @@ public class EmprestimoService {
                 }
             }
         }
+    }
+
+    protected boolean findAlunoByAlunoAndData(Aluno aluno) {
+        boolean temEmprestimo = emprestimoRepository.existsByCodAlunoAndFoiDevolvidoFalseAndCanceladoFalse(aluno);
+        return temEmprestimo;
     }
 
     /*
