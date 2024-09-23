@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UsusarioSistemaRepository extends JpaRepository<Usuario, Long>{
+public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 
     @Query("SELECT us FROM Usuario us WHERE us.status = ?1")
     Page<Usuario> findAllByStatus(@Param("status") Boolean status, Pageable pageable);

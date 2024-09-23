@@ -1,5 +1,6 @@
 package edu.api.bookflow.Repository;
 
+import edu.api.bookflow.Model.Aluno;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,10 +9,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import edu.api.bookflow.Model.Emprestimo;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
 public interface EmprestimoRepository extends JpaRepository<Emprestimo, Long>{
+
+    boolean existsByCodAlunoAndFoiDevolvidoFalseAndCanceladoFalse(Aluno aluno);
 
     //metodo personalizado para buscar emprestimos de um aluno
     List<Emprestimo> findByCodAluno_CodAluno(Long codAluno);
