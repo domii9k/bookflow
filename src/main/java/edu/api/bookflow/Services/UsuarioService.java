@@ -98,7 +98,7 @@ public class UsuarioService {
         if (!usuario.getStatus()) { // se falso
             usuario.setStatus(true); // altere para true
             repository.save(usuario); // salva o objeto
-            return ApiHttpResponse.responseStatus(HttpStatus.OK, "Usuário desativado com sucesso!");
+            return ApiHttpResponse.responseStatus(HttpStatus.OK, "Usuário ativado com sucesso!");
         } else {
             return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED,"");
         }

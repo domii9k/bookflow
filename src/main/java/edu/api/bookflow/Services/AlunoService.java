@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Validated
 @Service
@@ -75,15 +76,10 @@ public class AlunoService {
                 }).orElseThrow(() -> new NotFoundObject(id));
     }
 
-    public AlunoDTO patch(@Positive Long id, @Valid AlunoDTO alunoIncompleto) {
+    public AlunoDTO patch(@Positive Long id, @Valid Map<String,Object> fields) {
         Aluno alunoExistente = alunoRepository.findById(id).orElseThrow(() -> new NotFoundObject(id));
-        try {
-            patcher.patch(alunoExistente, alunoMapper.convertToEntity(alunoIncompleto));
-            alunoRepository.save(alunoExistente);
-        } catch (Exception e) {
-            throw new RuntimeException("OPS! Parece que houve um erro ao tentar atualizar o Aluno.\nPor favor, contate o administrador do sistema.");
-        }
-        return alunoMapper.convertToDto(alunoExistente);
+        GlobalPatch.globalPatch(fields, alunoExistente);
+        return alunoMapper.convertToDto(alunoRepository.save(alunoExistente));
     }
 
     public void delete(@Positive Long id) {

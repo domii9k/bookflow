@@ -51,6 +51,7 @@ public class AutorService {
     }
 
     public AutorDTO create(@Valid AutorDTO autorDTO) {
+        Autor autor = new Autor();
         return autorMapper.convertToDto(autorRepository.save(autorMapper.convertToEntity(autorDTO)));
     }
 

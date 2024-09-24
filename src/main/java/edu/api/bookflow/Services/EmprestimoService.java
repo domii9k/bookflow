@@ -7,9 +7,14 @@ import edu.api.bookflow.Exceptions.ApiHttpResponse;
 import edu.api.bookflow.Exceptions.NotFoundObject;
 import edu.api.bookflow.Model.Aluno;
 import edu.api.bookflow.Model.Emprestimo;
+import edu.api.bookflow.Model.Livro;
 import edu.api.bookflow.Model.Usuario;
+import edu.api.bookflow.Repository.AlunoRepository;
 import edu.api.bookflow.Repository.EmprestimoRepository;
+import edu.api.bookflow.Repository.LivroRepository;
+import edu.api.bookflow.Repository.UsuarioRepository;
 import edu.api.bookflow.Services.patchHttpRequest.GlobalPatch;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import org.springframework.beans.BeanUtils;
@@ -25,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Validated
 @Service
@@ -32,19 +38,22 @@ public class EmprestimoService {
 
 
     @Autowired
-    private static EmprestimoRepository emprestimoRepository;
+    private final EmprestimoRepository emprestimoRepository;
     @Autowired
-    private static EmprestimoMapper emprestimoMapper;
+    private final EmprestimoMapper emprestimoMapper;
     @Autowired
-    private static LivroService livroService;
+    private final AlunoRepository alunoRepository;
     @Autowired
-    private static AlunoService alunoService;
+    private UsuarioRepository usuarioRepository;
+    @Autowired
+    LivroRepository livroRepository;
     @Autowired
     private GlobalPatch patcher;
 
-    public EmprestimoService(EmprestimoRepository emprestimoRepository, EmprestimoMapper emprestimoMapper) {
+    public EmprestimoService(EmprestimoRepository emprestimoRepository, EmprestimoMapper emprestimoMapper, AlunoRepository alunoRepository) {
         this.emprestimoRepository = emprestimoRepository;
         this.emprestimoMapper = emprestimoMapper;
+        this.alunoRepository = alunoRepository;
     }
 
     public PaginationDTO<EmprestimoDTO> listAll(@RequestParam(name = "pag", defaultValue = "0") @PositiveOrZero int pageNumber,
@@ -66,12 +75,28 @@ public class EmprestimoService {
         return emprestimoRepository.findById(id).map(emprestimoMapper::convertToDto).orElseThrow(() -> new NotFoundObject(id));
     }
 
-    public EmprestimoDTO create(@Valid EmprestimoDTO emprestimoDTO) {
-        validaAluno(emprestimoDTO);
-        validaLivro(emprestimoDTO);
-        return emprestimoMapper.convertToDto(emprestimoRepository.save(emprestimoMapper.convertToEntity(emprestimoDTO)));
+    @Transactional
+    public EmprestimoDTO create(EmprestimoDTO dto) {
+        // Converter DTO para entidade
+        Emprestimo emprestimo = emprestimoMapper.convertToEntity(dto);
+
+        Livro livro = validaLivro(dto);
+
+        // Setar entidades relacionadas
+        emprestimo.setRespEmprestimo(validaResponsávelEmpréstimo(dto));
+        emprestimo.setCodAluno(validaAluno(dto));
+        emprestimo.setCodLivro(livro);
+        livro.setSttsEmprestado(true);
+        livroRepository.save(livro);
+
+        // Salvar no banco de dados
+        Emprestimo salvo = emprestimoRepository.save(emprestimo);
+
+        // Converter entidade salva para DTO e retornar
+        return emprestimoMapper.convertToDto(salvo);
     }
 
+    @Transactional
     public EmprestimoDTO update(@Positive Long id, @Valid EmprestimoDTO dto) {
         return emprestimoRepository.findById(id)
                 .map(registroEncontrado -> {
@@ -80,10 +105,10 @@ public class EmprestimoService {
                 }).orElseThrow(() -> new NotFoundObject(id));
     }
 
+    @Transactional
     public EmprestimoDTO updatePatch(@Positive Long id, Map<String, Object> fields) {
         Emprestimo emprestimoExistente = emprestimoRepository.findById(id).orElseThrow(() -> new NotFoundObject(id));
         patcher.globalPatch(fields, emprestimoExistente);
-        //Livro livro = livroService.finById();
         return emprestimoMapper.convertToDto(this.emprestimoRepository.save(emprestimoExistente));
     }
 
@@ -93,10 +118,14 @@ public class EmprestimoService {
 
     public ResponseEntity<Object> cancelaEmprestimo(@Positive Long id) {
         Emprestimo emprestimo = emprestimoRepository.findById(id).orElseThrow(() -> new NotFoundObject(id));
-        if (emprestimo.getCancelado()) { //se falso
+        Livro livro = emprestimo.getCodLivro();
+
+        if (!emprestimo.getCancelado()) { //se falso
             emprestimo.setCancelado(true);
             emprestimo.setFoiDevolvido(true);
+            livro.setSttsEmprestado(false);
             emprestimoRepository.save(emprestimo);
+            livroRepository.save(livro);
 
             return ApiHttpResponse.responseStatus(HttpStatus.OK, "Empréstimo cancelado com sucesso!");
         } else {
@@ -104,13 +133,20 @@ public class EmprestimoService {
         }
     }
 
+    public EmprestimoDTO devolverEmprestimo(@Positive Long id){return null;}
+
     /*
      * Metodo utilizado para validar se o aluno já possui um empréstimo ativo
      * @param EmprestimoDTO emprestimoDTO
      * */
-    private static void validaAluno(EmprestimoDTO emprestimoDTO) {
+    private Aluno validaAluno(EmprestimoDTO emprestimoDTO) {
         Long idAluno = emprestimoDTO.aluno().codAluno();
         LocalDate hoje = LocalDate.now();
+        Aluno aluno = alunoRepository.findById(idAluno).orElseThrow(() -> new NotFoundObject(idAluno));
+
+        if (!aluno.getStatus()) {
+            throw new IllegalStateException("O aluno " + aluno.getNomeCompleto() + " está desativado e não pode solicitar empréstimos.");
+        }
 
         // Busca todos os empréstimos do aluno no banco de dados
         List<Emprestimo> emprestimosDoAluno = emprestimoRepository.findByCodAluno_CodAluno(idAluno);
@@ -126,15 +162,24 @@ public class EmprestimoService {
                 }
             }
         }
+
+        return aluno;
     }
 
     /*
      * Metodo utilizado para validar se o livro já está em um emréstimo ativo
      * @param EmprestimoDTO emprestimoDTO
      * */
-    private static void validaLivro(EmprestimoDTO emprestimoDTO) {
+    private Livro validaLivro(EmprestimoDTO emprestimoDTO) {
         Long idLivro = emprestimoDTO.codLivro().getCodLivro();
         LocalDate hoje = LocalDate.now();
+
+        Livro livro = livroRepository.findById(idLivro).orElseThrow(()-> new NotFoundObject(idLivro));
+
+        if (!livro.getStatus()){
+            throw new IllegalStateException("O livro " + livro.getPatrimonio() + " está desativado e não pode solicitado para empréstimos.");
+        }
+
         List<Emprestimo> emprestimosDoLivro = emprestimoRepository.findByCodLivro_CodLivro(idLivro);
 
         for (Emprestimo emprestimo : emprestimosDoLivro) {
@@ -147,11 +192,26 @@ public class EmprestimoService {
                 }
             }
         }
+
+        return  livro;
     }
 
     protected boolean findAlunoByAlunoAndData(Aluno aluno) {
         boolean temEmprestimo = emprestimoRepository.existsByCodAlunoAndFoiDevolvidoFalseAndCanceladoFalse(aluno);
         return temEmprestimo;
+    }
+
+    private Usuario validaResponsávelEmpréstimo(EmprestimoDTO emprestimoDTO) {
+        Long idUsuario = emprestimoDTO.respEmprestimo().codUsuario();
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new NotFoundObject(idUsuario));
+
+        if (!usuario.getStatus()) {
+            throw new IllegalStateException("O usuário " + usuario.getNome() + " está desativado e não pode realizar empréstimos.");
+        }
+
+
+        return usuario;
+
     }
 
     /*
