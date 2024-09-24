@@ -17,7 +17,7 @@ public class EditoraMapper {
                 model.getNomeFantasia(),
                 model.getEndereco(),
                 model.getSite(),
-                model.isStatus()
+                model.getStatus()
         );
     }
 

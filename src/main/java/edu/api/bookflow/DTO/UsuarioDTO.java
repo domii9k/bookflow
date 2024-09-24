@@ -13,5 +13,11 @@ public record UsuarioDTO(
         @NotBlank String senha,
         @NotNull PermissoesEnum permissao,
         @NotBlank String cpf,
-        @NotNull boolean statusAtivo) {
+        @NotNull Boolean statusAtivo) {
+
+    public UsuarioDTO {
+        if (statusAtivo == null) {
+            statusAtivo = true;
+        }
+    }
 }

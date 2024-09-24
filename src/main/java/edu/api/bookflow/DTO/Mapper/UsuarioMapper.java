@@ -7,7 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UsuarioSistemaMapper {
+public class UsuarioMapper {
 
     public UsuarioDTO convertToDto(Usuario model) {
         if (model == null) {

@@ -15,7 +15,7 @@ public class CursoMapper {
         return new CursoDTO(
                 model.getCodCurso(),
                 model.getDescricao(),
-                model.isStatus()
+                model.getStatus()
         );
     }
 

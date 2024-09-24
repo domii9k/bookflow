@@ -15,7 +15,7 @@ public class CategoriaMapper {
         return new CategoriaDTO(
                 model.getCodCategoria(),
                 model.getDescricao(),
-                model.isStatus()
+                model.getStatus()
         );
     }
 
