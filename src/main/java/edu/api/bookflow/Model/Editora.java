@@ -27,6 +27,6 @@ public class Editora extends RepresentationModel<Editora> {
     private String site;
 
     @Column(name = "stts_ativo", columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private boolean status = true;
+    private Boolean status = true;
 
 }

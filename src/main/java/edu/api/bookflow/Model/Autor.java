@@ -21,5 +21,5 @@ public class Autor extends RepresentationModel<Autor> {
     private String nome;
 
     @Column(name = "stts_ativo", columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private boolean status = true;
+    private Boolean status = true;
 }

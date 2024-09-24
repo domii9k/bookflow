@@ -41,5 +41,5 @@ public class Usuario extends RepresentationModel<Usuario> {
     private String cpf;
 
     @Column(name = "stts_ativo", columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private boolean status = true;
+    private Boolean status = true;
 }

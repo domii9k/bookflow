@@ -20,5 +20,5 @@ public class Categoria extends RepresentationModel<Categoria>{
     private String descricao;
    
     @Column(name = "stts_ativo", columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private boolean status = true;
+    private Boolean status = true;
 }

@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.time.LocalDate;
+
 @Data
 @Entity
 @EqualsAndHashCode(callSuper=true)
@@ -13,7 +15,7 @@ public class Livro extends RepresentationModel<Livro>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cod_livro")
+    @Column(name = "cod_livro", columnDefinition = "SERIAL PRIMARY KEY")
     private Long codLivro;
 
     @Column(name = "titulo", nullable = false, columnDefinition = "TEXT")
@@ -47,9 +49,15 @@ public class Livro extends RepresentationModel<Livro>{
     private Editora editora;
 
     @Column(name = "stts_emprestado", columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean sttsEmprestado;
+    private Boolean sttsEmprestado;
 
     @Column(name = "stts_ativo", columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private boolean status = true;
+    private Boolean status = true;
+
+    @PrePersist
+    protected void onCreate() {
+        this.status = true;
+        this.sttsEmprestado = false;
+    }
 
 }

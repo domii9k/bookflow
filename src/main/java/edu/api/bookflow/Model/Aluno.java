@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "aluno")
 public class Aluno extends RepresentationModel<Aluno> {
 
@@ -47,4 +47,9 @@ public class Aluno extends RepresentationModel<Aluno> {
 
     @Column(name = "endereco", nullable = false, columnDefinition = "TEXT")
     private String endereco;
+
+    @PrePersist
+    protected void onCreate() {
+        this.status = true;
+    }
 }
