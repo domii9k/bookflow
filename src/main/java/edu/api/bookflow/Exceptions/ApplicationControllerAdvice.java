@@ -47,7 +47,4 @@ public class ApplicationControllerAdvice {
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
-
-
-
 }

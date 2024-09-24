@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/alunos")
 public class AlunoController {
@@ -48,7 +50,7 @@ public class AlunoController {
 
     @PatchMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)
-    public AlunoDTO patch(@PathVariable Long id, @RequestBody AlunoDTO dto){return service.patch(id, dto);}
+    public AlunoDTO patch(@PathVariable Long id, @RequestBody Map<String,Object> fields){return service.patch(id, fields);}
 
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
