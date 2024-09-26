@@ -36,7 +36,7 @@ No Insomnia, selecione a requisição GET e insira os seguintes links disponíve
 > 
 >  Também há rotas para categorias, autores e editoras.
 
->🚨 Cada requisição possui headers para pesquisas na url.
+>🚨 Cada requisição possui headers para pesquisas na url. Você pode verificá-los [aqui](https://github.com/domii9k/bookflow/blob/main/orientacoes/PESQUISA_URL.md).
 
 Nele, caso bem sucedido, será buscado e retornado todos os empréstimos, cursos, alunos, usuários ou livros já cadastrados no banco.
 >Note que, ao voltar essas informações, outras informações sensíveis que, num projeto em produção, é altamente perigoso e proibido, também serão exibidas. Estes registros não incluem informações de pessoas reais, apenas informações testes. Novas configurações de segurança serão adicionadas ao longo do projeto.
