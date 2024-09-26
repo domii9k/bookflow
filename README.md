@@ -1,110 +1,147 @@
-## 📝 Instruções de execução do código
+## 📝 Instruções de execução do código (2024/2)
 
-Este README aborda algumas instruções de execução do código do Projeto BookFlow (back-end api). O front-end do projeto pode ser encontrado no repositório [Front End](https://github.com/domii9k/BookFlow-FrontEnd).
+Este README aborda algumas instruções de execução do código do Projeto BookFlow (back-end api) [ATUALIZADO]. O front-end do projeto pode ser encontrado no repositório [Front End](https://github.com/domii9k/BookFlow-FrontEnd).
 
 ### ✔ Considerações:
 
-1) O banco de dados deste projeto foi subido no [Supa Base](https://supabase.com/), mas o “script” do banco pode ser encontrado dentro do diretório do projeto, no pacote SQL.
-2) O projeto em si está no [Render](https://render.com/), então não será necessário clonar o código em sua máquina local. Mas, caso queira, será necessário executar o Script no PostgreSQL e configurar as propriedades do projeto localmente.
-> Como o deploy do projeto está no Render, pode acontecer das requisições demorarem um minuto ou mais, devido à inatividade que o site o coloca.
-### 🛠 Ferramentas
-Para as requisições, foi utilizado o PostMan, mas pode ser utilizado o “software” da sua preferência. Caso queira utilizar um navegador para as requisições GET, recomenda-se o Firefox, pois ele traz as requisições visivelmente mais atraentes.
+1) O projeto foi removido do Render, devido à lentidão que a plataforma o coloca, por ser gratuito.
+2) As novas instruções serão para rodar o projeto localmente.
+3) O front-end ainda não possui atualizações, e estas estão programadas para dar continuação no final de outubro.
+4) Implementação de acesso/Login está programada para o começo de outubro.
 
-## Executando Remotamente:
-Link da API do projeto: https://bookflow-3gbn.onrender.com
+### 🛠 Ferramentas
+Para as requisições, foi utilizado o <i>Insomnia</i>, mas pode ser utilizado o “software” da sua preferência. Caso queira utilizar um navegador para as requisições GET, recomenda-se o Firefox, pois ele traz as requisições visivelmente mais atraentes.
+
+## Banco de dados:
+
+Este projeto utilizou o PostgreSQL para armazenamento dos dados. Será disponibilizado o SCRIPT do mesmo com algumas inserções prontas de exemplo.
+
+Instale o software e crie o banco de acordo com o SCRIPT.
+
+No arquivo _application.prorpeties_ substitua as variáveis para os dados do banco que criou.
+
+## Executando Localmente:
+Link da API do projeto: https://localhost:9000
 > Essa rota sozinha não possui nenhuma página (no momento) e trará uma página de erro.\
->O projeto está em desenvolvimento, então algumas requisições podem não estar disponíveis. Por isso, este README irá ensinar apenas requisições da página de **Empréstimos** (GET, POST, PUT e DELETE). E, para as outras, apenas GET.
+> Agora, todas as requisições estão disponíveis para testes.
 
  #### 🔁 GET
 
-No PostMan, selecione a requisição GET e insira os seguintes links disponíveis para GET:
->https://bookflow-3gbn.onrender.com/emprestimos \
->https://bookflow-3gbn.onrender.com/cursos \
->https://bookflow-3gbn.onrender.com/alunos \
->https://bookflow-3gbn.onrender.com/livros
+No Insomnia, selecione a requisição GET e insira os seguintes links disponíveis para GET:
+>https://localhost:9000/emprestimos \
+>https://localhost:9000/cursos \
+>https://localhost:9000/alunos \
+>https://localhost:9000/livros \
+>https://localhost:9000/usuarios
+> 
+>  Também há rotas para categorias, autores e editoras.
 
-Nele, caso bem sucedido, será buscado e retornado todos os empréstimos, cursos, alunos ou livros já cadastrados no banco.
+>🚨 Cada requisição possui headers para pesquisas na url.
+
+Nele, caso bem sucedido, será buscado e retornado todos os empréstimos, cursos, alunos, usuários ou livros já cadastrados no banco.
 >Note que, ao voltar essas informações, outras informações sensíveis que, num projeto em produção, é altamente perigoso e proibido, também serão exibidas. Estes registros não incluem informações de pessoas reais, apenas informações testes. Novas configurações de segurança serão adicionadas ao longo do projeto.
+
+Para GET individual (um item), basta inserir o mesmo link + /{id}. Exemplo: https://localhost:9000/emprestimos/23
 
 #### ⬆ POST
 
-No PostMan, selecione a requisição POST e insira o seguinte link:
-> https://bookflow-3gbn.onrender.com/emprestimos
+No Insomnia, selecione a requisição POST e insira o link apresentado no GET + /novo. Exemplo:
+> https://localhost:9000/emprestimos/novo
 
 Para inserir um ‘item’, segue o JSON necessário para cadastrar um empréstimo. As inserções podem ser modificadas, desde que os itens existam no banco.
 
 ```json
-
 {
-  "cancelado": 0,
   "codLivro": {
-    "codLivro": 1
+    "codLivro": 4
   },
-  "codAluno": {
-    "codAluno": 2
+  "aluno": {
+    "codAluno": 9
   },
-  "codCurso": {
-    "codCurso": 1
+  "respEmprestimo": {
+    "codUsuario": 3
   },
-  "codRespEmprestimo": {
-    "codUsuario": 2
-  },
-  "dataEmprestimo": "2024-06-15",
-  "dataDevolucao": "2024-06-30",
-  "observacao": "observacao testeeeeeeeeeeeee",
-  "atrasado": 0
+  "dataPrevDevolucao": "2024-09-30",
+  "observacao": "Novo LALALALALAL"
 }
 
 ```
->As variáveis _cancelado_ e _atrasado_ aceitam SOMENTE valores 0 ou 1.
+>Outras variáveis não inseridas no JSON possuem valores DEFAULT, não sendo necessária a inserção. Como: a dataEmprestimo, cancelado, foiDevolvido, etc.
 
 Caso bem sucedido, será retornado o emprestimo criado em formado JSON.
 #### ⤴ PUT 
-No PostMan, selecione a opção PUT e insira o seguinte _link_:
->https://bookflow-3gbn.onrender.com/emprestimos/{codEmprestimo} \
-> Em codEmprestimo coloque o código que deseja alterar, desde que ele exista entre os registros.
+No Insomnia, selecione a opção PUT e insira o link + /{id}. Exemplo:
+>https://localhost:9000/emprestimos/45 \
+> Em "id" coloque o código que deseja alterar, desde que ele exista entre os registros.
 
-Insira o mesmo JSON, porém adicone a variavel do codigo do emprestimo:
+Uma desvantagem do PUT é que será necessário inserir o corpo do empréstimo inteiro (id's das entidades relacionadas e outras variaveis) para funcionar. Caso contrário, será retornado apenas um erro 500.
 
 ```json
 {
-    "codEmprestimo":10,
-    "cancelado": 1,
-    "codLivro": {
-        "codLivro": 1
-    },
-    "codAluno": {
-        "codAluno": 2
-    },
-    "codCurso": {
-        "codCurso": 1
-    },
-    "codRespEmprestimo": {
-        "codUsuario": 2
-    },
-    "codRespDevolucao": {
-        "codUsuario": 1
-    },
-    "dataEmprestimo": "2024-06-15",
-    "dataDevolucao": "2024-06-30",
-    "observacao": "observacao modificada",
-    "atrasado": 0
+	"isCancelado": false,
+	"codLivro": {
+		"codLivro": 4
+	},
+	"aluno": {
+		"codAluno": 9
+	},
+	"respEmprestimo": {
+		"codUsuario": 3
+	},
+	"respDevolucao": {
+		"codUsuario": 7
+	},
+	"dataEmprestimo": [
+		2024,
+		9,
+		25
+	],
+	"dataPrevDevolucao": [
+		2024,
+		9,
+		30
+	],
+	"dataDevolucao": [
+		2024,
+		9,
+		25
+	],
+	"isAtrasado": false,
+	"foiDevolvido": true,
+	"observacao": "foi devolvido PUT"
 }
 ```
-Caso bem sucedido, será retornado o emprestimo alterado em formado JSON.
+Caso bem sucedido, será retornado o empréstimo alterado em formato JSON. Nada prático, certo? Temos uma solução!
+
+#### 🖋️ PATCH
+
+O PATCH é uma solução mais recomendável para grandes entidades, como o Empréstimo. Será necessário passar no corpo do JSON apenas o(s) campo(s) que deseja alterar. Como no PUT, informe o link e o ID do item.
+
+````json
+{
+  "observacao": "este item foi alterado com o PATCH"
+}
+````
+Caso bem sucedido, será retornado o corpo do JSON com o campo alterado.
+
 #### ✖ DELETE
-No PostMan, selecione a opção de requisição DELETE e insira o seguinte link:
->https://bookflow-3gbn.onrender.com/emprestimos/{codEmprestimo} \
-> Em codEmprestimo coloque o código que deseja deletar, desde que ele exista entre os registros.
+No Insomnia, selecione a opção de requisição DELETE e insira o link + /{id}. Exemplo:
+>https://localhost:9000/emprestimos/4 \
+> Em ID coloque o código que deseja deletar, desde que ele exista entre os registros.
 
-Caso bem sucedido, deve aparecer a seguinte mensagem:
-
-```json
-{
-    "resposta": "Empréstimo deletado com sucesso",
-    "lista": null
-}
-```
+Caso bem sucedido, será retornado o status 204 - _NO_CONTENT_
 
 Pronto! Requisições realizadas com sucesso. \
 Veja o README do front para informações sobre o mesmo no repositório [Front End](https://github.com/domii9k/BookFlow-FrontEnd).
+
+#### 📆 Cronograma de Desenvolvimento 2024/2:
+
+| Mês       | Atividade                                                                                     |
+|:---------:|:----------------------------------------------------------------------------------------------|
+| Agosto    | Finalizar CRUD das tabelas do Sistema                                                         |
+| Setembro  | Aplicar regras de negócio (expiração do empréstimo, validação de livros e alunos e etc)       |
+| Outubro   | Aplicar autenticação de usuários e permissões de acesso às rotas (Spring Security)            |
+| Novembro  | FrontEnd - finalizar telas e autenticação de usuários                                         |
+| Dezembro  | FrontEnd - finalizar telas / realização dos testes                                            |
+
+
