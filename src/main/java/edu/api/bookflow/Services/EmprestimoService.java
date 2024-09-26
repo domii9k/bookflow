@@ -1,6 +1,7 @@
 package edu.api.bookflow.Services;
 
 import edu.api.bookflow.DTO.EmprestimoDTO;
+import edu.api.bookflow.DTO.EmprestimoDevolucaoDTO;
 import edu.api.bookflow.DTO.Mapper.EmprestimoMapper;
 import edu.api.bookflow.DTO.Pagination.PaginationDTO;
 import edu.api.bookflow.Exceptions.ApiHttpResponse;
@@ -133,7 +134,34 @@ public class EmprestimoService {
         }
     }
 
-    public EmprestimoDTO devolverEmprestimo(@Positive Long id){return null;}
+    public ResponseEntity<Object> devolverEmprestimo(@Positive Long id, @Valid EmprestimoDevolucaoDTO devolucaoDTO){
+        // busca o empréstimo pelo ID
+        Emprestimo emprestimo = emprestimoRepository.findById(id).orElseThrow(() -> new NotFoundObject(id));
+
+        if (emprestimo.getFoiDevolvido()){
+            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED, "");
+        }
+        // valida e busca o responsável pela devolução
+        Usuario respDevolucao = validaResponsávelDevolucao(devolucaoDTO);
+
+        // busca o livro associado ao empréstimo
+        Livro livro = emprestimo.getCodLivro();
+
+        // atualiza as informações do empréstimo
+        String observacao = devolucaoDTO.observacao();
+        LocalDate hoje = LocalDate.now();
+        emprestimo.setDataDevolucao(hoje);
+        emprestimo.setFoiDevolvido(true);
+        emprestimo.setRespDevolucao(respDevolucao);
+        emprestimo.setObservacao(observacao);
+
+        // atualiza o status do livro para disponível
+        livro.setSttsEmprestado(false);
+        livroRepository.save(livro);
+
+        // salva o empréstimo atualizado
+        return ApiHttpResponse.responseStatus(HttpStatus.OK, "Empréstimo devolvido com sucesso!");
+    }
 
     /*
      * Metodo utilizado para validar se o aluno já possui um empréstimo ativo
@@ -208,10 +236,17 @@ public class EmprestimoService {
         if (!usuario.getStatus()) {
             throw new IllegalStateException("O usuário " + usuario.getNome() + " está desativado e não pode realizar empréstimos.");
         }
-
-
         return usuario;
+    }
 
+    private Usuario validaResponsávelDevolucao(EmprestimoDevolucaoDTO emprestimoDTO) {
+        Long idUsuario = emprestimoDTO.respDevolucao().codUsuario();
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new NotFoundObject(idUsuario));
+
+        if (!usuario.getStatus()) {
+            throw new IllegalStateException("O usuário " + usuario.getNome() + " está desativado e não pode realizar a devolução de empréstimos.");
+        }
+        return usuario;
     }
 
     /*

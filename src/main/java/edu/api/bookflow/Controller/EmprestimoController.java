@@ -1,5 +1,6 @@
 package edu.api.bookflow.Controller;
 
+import edu.api.bookflow.DTO.EmprestimoDevolucaoDTO;
 import edu.api.bookflow.DTO.Pagination.PaginationDTO;
 import edu.api.bookflow.DTO.EmprestimoDTO;
 
@@ -71,5 +72,10 @@ public class EmprestimoController {
     @PatchMapping("/{id}/cancelar")
     public ResponseEntity<Object> cancelar(@PathVariable Long id) {
         return service.cancelaEmprestimo(id);
+    }
+
+    @PatchMapping("/{id}/devolver")
+    public ResponseEntity<Object> devolver(@PathVariable Long id, @RequestBody EmprestimoDevolucaoDTO devolucaoDTO) {
+        return service.devolverEmprestimo(id, devolucaoDTO);
     }
 }
