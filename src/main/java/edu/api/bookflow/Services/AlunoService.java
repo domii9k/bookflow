@@ -93,7 +93,7 @@ public class AlunoService {
             alunoRepository.save(aluno);
             return ApiHttpResponse.responseStatus(HttpStatus.OK, "Aluno ativado com sucesso!");
         }else{
-            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED, "Aluno já se encontra ativo!");
+            return ApiHttpResponse.responseStatus(HttpStatus.OK, "Aluno já se encontra ativo!");
         }
     }
 
@@ -104,7 +104,7 @@ public class AlunoService {
       if (bool){
           throw new IllegalStateException("Desculpe! Parece que o aluno possui um empréstimo em aberto e não pode ser desativado!");
       } else if (!aluno.getStatus()) {
-          return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED, "Aluno já se encontra desativado!");
+          return ApiHttpResponse.responseStatus(HttpStatus.OK, "Aluno já se encontra desativado!");
       } else {
           aluno.setStatus(false);
           alunoRepository.save(aluno);

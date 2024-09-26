@@ -80,7 +80,7 @@ public class AutorService {
             autorRepository.save(autor);
             return ApiHttpResponse.responseStatus(HttpStatus.OK, "Autor ativado com sucesso!");
         } else {
-            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED, "");
+            return ApiHttpResponse.responseStatus(HttpStatus.OK, "");
         }
     }
 
@@ -92,7 +92,7 @@ public class AutorService {
             autorRepository.save(autor);
             return ApiHttpResponse.responseStatus(HttpStatus.OK, "Autor desativado com sucesso!");
         } else {
-            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED, "");
+            return ApiHttpResponse.responseStatus(HttpStatus.OK, "");
         }
     }
 }

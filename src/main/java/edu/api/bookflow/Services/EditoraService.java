@@ -80,7 +80,7 @@ public class EditoraService {
             editoraRepository.save(editora);
             return ApiHttpResponse.responseStatus(HttpStatus.OK, "Editora ativada com sucesso!");
         } else {
-            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED, "");
+            return ApiHttpResponse.responseStatus(HttpStatus.OK, "");
         }
     }
 
@@ -92,7 +92,7 @@ public class EditoraService {
             editoraRepository.save(editora);
             return ApiHttpResponse.responseStatus(HttpStatus.OK, "Editora desativada com sucesso!");
         } else {
-            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED, "");
+            return ApiHttpResponse.responseStatus(HttpStatus.OK, "");
         }
     }
 

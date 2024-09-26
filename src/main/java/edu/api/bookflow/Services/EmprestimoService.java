@@ -130,7 +130,7 @@ public class EmprestimoService {
 
             return ApiHttpResponse.responseStatus(HttpStatus.OK, "Empréstimo cancelado com sucesso!");
         } else {
-            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED, "");
+            return ApiHttpResponse.responseStatus(HttpStatus.OK, "");
         }
     }
 
@@ -139,7 +139,7 @@ public class EmprestimoService {
         Emprestimo emprestimo = emprestimoRepository.findById(id).orElseThrow(() -> new NotFoundObject(id));
 
         if (emprestimo.getFoiDevolvido()){
-            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED, "");
+            return ApiHttpResponse.responseStatus(HttpStatus.OK, "");
         }
         // valida e busca o responsável pela devolução
         Usuario respDevolucao = validaResponsávelDevolucao(devolucaoDTO);

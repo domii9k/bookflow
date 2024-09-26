@@ -100,7 +100,7 @@ public class UsuarioService {
             repository.save(usuario); // salva o objeto
             return ApiHttpResponse.responseStatus(HttpStatus.OK, "Usuário ativado com sucesso!");
         } else {
-            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED,"");
+            return ApiHttpResponse.responseStatus(HttpStatus.OK,"");
         }
     }
 
@@ -111,7 +111,7 @@ public class UsuarioService {
             repository.save(usuario);
             return ApiHttpResponse.responseStatus(HttpStatus.OK, "Usuário desativado com sucesso!");
         } else{
-            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED,"");
+            return ApiHttpResponse.responseStatus(HttpStatus.OK,"");
         }
     }
 

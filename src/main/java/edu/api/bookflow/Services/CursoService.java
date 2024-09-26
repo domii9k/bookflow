@@ -80,7 +80,7 @@ public class CursoService {
             cursoRepository.save(curso);
             return ApiHttpResponse.responseStatus(HttpStatus.OK, "Curso ativado com sucesso!");
         } else {
-            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED, "");
+            return ApiHttpResponse.responseStatus(HttpStatus.OK, "Curso já se encontra ativado!");
         }
     }
 
@@ -92,7 +92,7 @@ public class CursoService {
             cursoRepository.save(curso);
             return ApiHttpResponse.responseStatus(HttpStatus.OK, "Curso desativado com sucesso!");
         } else {
-            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED, "");
+            return ApiHttpResponse.responseStatus(HttpStatus.OK, "Curso já se encontra desativado!");
         }
     }
 }

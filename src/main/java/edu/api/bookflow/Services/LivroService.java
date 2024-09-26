@@ -104,7 +104,7 @@ public class LivroService {
             livroRepository.save(livro);
             return ApiHttpResponse.responseStatus(HttpStatus.OK, "Livro ativado com sucesso!");
         } else {
-            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED, "");
+            return ApiHttpResponse.responseStatus(HttpStatus.OK, "");
         }
     }
 

@@ -82,7 +82,7 @@ public class CategoriaService {
             categoriaRepository.save(categoria);
             return ApiHttpResponse.responseStatus(HttpStatus.OK, "Categoria ativada com sucesso!");
         } else {
-            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED, "");
+            return ApiHttpResponse.responseStatus(HttpStatus.OK, "");
         }
     }
 
@@ -94,7 +94,7 @@ public class CategoriaService {
             categoriaRepository.save(categoria);
             return ApiHttpResponse.responseStatus(HttpStatus.OK, "Categoria desativada com sucesso!");
         } else {
-            return ApiHttpResponse.responseStatus(HttpStatus.NOT_MODIFIED, "");
+            return ApiHttpResponse.responseStatus(HttpStatus.OK, "");
         }
     }
 }
