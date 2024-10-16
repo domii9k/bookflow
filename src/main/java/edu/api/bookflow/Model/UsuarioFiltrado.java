@@ -1,3 +1,4 @@
+/*
 package edu.api.bookflow.Model;
 
 import org.springframework.hateoas.RepresentationModel;
@@ -10,4 +11,4 @@ public class UsuarioFiltrado extends RepresentationModel<UsuarioFiltrado> {
     private String permissao;
 
     // Getters e Setters
-}
+}*/

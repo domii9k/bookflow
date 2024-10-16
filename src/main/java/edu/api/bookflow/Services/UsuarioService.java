@@ -69,10 +69,10 @@ public class UsuarioService {
         return repository.findById(id).map(mapper::convertToDto).orElseThrow(() -> new NotFoundObject(id));
     }
 
-    public UsuarioDTO create(@Valid UsuarioDTO usuarioDTO) {
+    /*public UsuarioDTO create(@Valid UsuarioDTO usuarioDTO) {
         validaCPFeEmail(mapper.convertToEntity(usuarioDTO));
         return mapper.convertToDto(repository.save(mapper.convertToEntity(usuarioDTO)));
-    }
+    }*/
 
     public UsuarioDTO update(@Positive Long id, @Valid UsuarioDTO usuarioDTO) {
         return repository.findById(id).map(registroEncontrado -> {
@@ -115,11 +115,11 @@ public class UsuarioService {
         }
     }
 
-    private static void validaCPFeEmail(Usuario usuario) {
+    public void validaCPFeEmail(Usuario usuario) {
         String email = usuario.getEmail();
         String cpf = usuario.getCpf();
         // Verifica se existe algum usuário com o mesmo CPF ou e-mail
-        List<Usuario> usuarioListByEmail = repository.findByEmail(email);
+        List<Usuario> usuarioListByEmail = repository.findUsuariosByEmail(email);
         List<Usuario> usuarioListByCpf = repository.findByCpf(cpf);
 
         if (!usuarioListByEmail.isEmpty()) {
