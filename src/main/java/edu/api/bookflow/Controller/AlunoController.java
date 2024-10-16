@@ -36,7 +36,7 @@ public class AlunoController {
         return service.findById(id);
     }
 
-    @PostMapping("/novo")
+    @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public AlunoDTO create(@RequestBody AlunoDTO dto) {
         return service.create(dto);

@@ -36,7 +36,7 @@ public class EditoraController {
         return service.findAll(pageNumber, pageSize, status, sortBy, sortDir);
     }
 
-    @PostMapping("/novo")
+    @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public EditoraDTO create(@RequestBody EditoraDTO editoraDTO) {
         return service.create(editoraDTO);

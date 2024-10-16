@@ -39,7 +39,7 @@ public class LivroController {
 
     }
 
-    @PostMapping("/novo")
+    @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public LivroDTO create(@RequestBody LivroDTO livroDTO) {
         return service.create(livroDTO);

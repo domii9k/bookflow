@@ -36,7 +36,7 @@ public class CategoriaController {
         return service.findAll(pageNumber, pageSize, status, sortBy, sortDir);
     }
 
-    @PostMapping("/novo")
+    @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public CategoriaDTO create(@RequestBody CategoriaDTO categoriaDTO) {
         return service.create(categoriaDTO);

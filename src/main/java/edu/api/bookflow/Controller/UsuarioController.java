@@ -32,11 +32,11 @@ public class UsuarioController {
         return service.listMapPagination(pageNumber, pageSize, status, sortBy, sortDir);
     }
 
-    @PostMapping("/novo")
+    /*@PostMapping("/novo")
     @ResponseStatus(code = HttpStatus.CREATED)
     public UsuarioDTO create(@RequestBody UsuarioDTO dto) {
         return service.create(dto);
-    }
+    }*/
 
     @RequestMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)

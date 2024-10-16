@@ -36,7 +36,7 @@ public class CursoController {
         return service.findAll(pageNumber, pageSize, status, sortBy, sortDir);
     }
 
-    @PostMapping("/novo")
+    @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public CursoDTO create(@RequestBody CursoDTO cursoDTO) {
         return service.create(cursoDTO);

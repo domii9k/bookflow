@@ -45,7 +45,7 @@ public class EmprestimoController {
         return service.findById(id);
     }
 
-    @PostMapping("/novo")
+    @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public EmprestimoDTO create(@RequestBody @Valid EmprestimoDTO dto) {
         return service.create(dto);
