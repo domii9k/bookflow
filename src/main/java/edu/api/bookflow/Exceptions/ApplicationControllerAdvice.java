@@ -39,7 +39,7 @@ public class ApplicationControllerAdvice {
     // Captura de exceção IllegalStateException para verificações específicas
     @ExceptionHandler(IllegalStateException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Object> handleIllegalStateException(IllegalStateException ex, WebRequest request) {
+    public ResponseEntity<Object> handleIllegalStateException(IllegalStateException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("status", HttpStatus.BAD_REQUEST.value());
         body.put("error", "Bad Request");
