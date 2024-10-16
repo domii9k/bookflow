@@ -13,6 +13,6 @@ public class CorsConfiguration implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
         .allowedOrigins("https://bookflow-phi.vercel.app")
-        .allowedMethods("GET", "POST", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT", "PUT");
+        .allowedMethods("GET", "POST", "DELETE","PATCH", "OPTIONS", "HEAD", "TRACE", "CONNECT", "PUT");
     }
 }
