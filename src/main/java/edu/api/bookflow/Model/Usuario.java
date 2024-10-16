@@ -48,13 +48,13 @@ public class Usuario implements UserDetails {
     @Column(name = "stts_ativo", columnDefinition = "BOOLEAN DEFAULT TRUE")
     private Boolean status = true;
 
-    public Usuario(String email, String Senha, PermissoesEnum permissao) {
+    public Usuario(String email, String senha, PermissoesEnum permissao) {
         this.email = email;
         this.senha = senha;
         this.permissao = permissao;
     }
 
-    public Usuario(String nome, String sobrenome, String email, String Senha, PermissoesEnum permissao, String cpf) {
+    public Usuario(String nome, String sobrenome, String email, String senha, PermissoesEnum permissao, String cpf) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.email = email;
