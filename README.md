@@ -25,7 +25,44 @@ Link da API do projeto: https://localhost:9000
 > Essa rota sozinha não possui nenhuma página (no momento) e trará uma página de erro.\
 > Agora, todas as requisições estão disponíveis para testes.
 
- #### 🔁 GET
+## 👩🏾‍💻 Autenticação de usuários
+
+### Login
+A implementação do _login_ na API foi feita com _Spring Security_ e o JWT. Para realizar o login é necessário inserir a url https://localhost:9000/auth/login.
+
+Para o corpo, com a requisição do tipo **POST**:
+
+````json
+{
+  "email": "algum_email",
+  "senha": "alguma_senha"
+}
+````
+>🚨 Necessário o usuário estar previamente cadastrado por um Administrador.
+
+Após lançar a requisição, é necessário copiar o _**token**_ que será gerado para execução das próximas requisições. Antes de lançá-las, é preciso colar o token na aba de Autenticação do Insomnia (ou outro software), com o prefixo "**Bearer**".
+
+### Cadastro de usuários
+
+Somente um usuário Adminostrador pode realizar o cadastro de novos usuários.
+
+URL: https://localhost:9000/auth/registro
+
+CORPO:
+````json
+{
+    "nome": "Nome",
+    "sobrenome": "Sobrenome",
+    "email": "email@gmail.com",
+    "senha": "algumasenha",
+    "permissao": "BIBLIOTECARIO",
+    "cpf": "umcpf"
+}
+````
+
+## ✔️ Requisições
+
+#### 🔁 GET
 
 No Insomnia, selecione a requisição GET e insira os seguintes links disponíveis para GET:
 >https://localhost:9000/emprestimos \
@@ -132,7 +169,8 @@ No Insomnia, selecione a opção de requisição DELETE e insira o link + /{id}.
 Caso bem sucedido, será retornado o status 204 - _NO_CONTENT_
 
 Pronto! Requisições realizadas com sucesso. \
-Veja o README do front para informações sobre o mesmo no repositório [Front End](https://github.com/domii9k/BookFlow-FrontEnd).
+Veja o README do front para informações sobre o mesmo no repositório [Front End](https://github.com/domii9k/BookFlow-FrontEnd). \
+>>> 🚨 Para visualizar o corpo JSON de cada tabela para requisições de cadastro, clique _[aqui](https://github.com/domii9k/bookflow/blob/main/orientacoes/REQUISICOES.md)_.
 
 #### 📆 Cronograma de Desenvolvimento 2024/2:
 
