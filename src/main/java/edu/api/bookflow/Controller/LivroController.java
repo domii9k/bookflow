@@ -31,7 +31,7 @@ public class LivroController {
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
     public PaginationDTO<LivroDTO> findAll(@RequestParam(name = "pag",defaultValue = "0") @PositiveOrZero int pageNumber,
-                                           @RequestParam(name = "size",defaultValue = "10") @Positive @Max(50) int pageSize,
+                                           @RequestParam(name = "size",defaultValue = "50") @Positive @Max(50) int pageSize,
                                            @RequestParam(name = "status", defaultValue = "true") Boolean status,
                                            @RequestParam(value = "sortBy", defaultValue = "titulo") String sortBy,
                                            @RequestParam(value = "sortDir", defaultValue = "asc") String sortDir) {
