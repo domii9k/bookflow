@@ -56,3 +56,40 @@
 ````
 > 🚨 **descricao** e **edicao** não são obrigatórios.
 
+#### Empréstimo
+
+````json
+{
+  "isCancelado": false,
+  "codLivro": {
+    "codLivro": 4
+  },
+  "aluno": {
+    "codAluno": 9
+  },
+  "respEmprestimo": {
+    "codUsuario": 3
+  },
+  "respDevolucao": {
+    "codUsuario": 7
+  },
+  "dataEmprestimo": [
+    2024,
+    9,
+    25
+  ],
+  "dataPrevDevolucao": [
+    2024,
+    9,
+    30
+  ],
+  "dataDevolucao": [
+    2024,
+    9,
+    25
+  ],
+  "isAtrasado": false,
+  "foiDevolvido": true,
+  "observacao": "foi devolvido PUT"
+}
+````
