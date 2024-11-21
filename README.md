@@ -6,6 +6,7 @@ Este README aborda algumas instruções de execução do código do Projeto Book
 
 1) O projeto foi removido do Render, devido à lentidão que a plataforma o coloca, por ser gratuito.
 2) As novas instruções serão para rodar o projeto localmente.
+3) Necessário criar o arquivo .env na raiz do projeto para criação da _Secret Key_.
 
 ### 🛠 Ferramentas
 Para as requisições, foi utilizado o <i>Insomnia</i>, mas pode ser utilizado o “software” da sua preferência. Caso queira utilizar um navegador para as requisições GET, recomenda-se o Firefox, pois ele traz as requisições visivelmente mais atraentes.
