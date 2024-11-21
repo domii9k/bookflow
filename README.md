@@ -1,13 +1,11 @@
 ## 📝 Instruções de execução do código (2024/2)
 
-Este README aborda algumas instruções de execução do código do Projeto BookFlow (back-end api) [ATUALIZADO]. O front-end do projeto pode ser encontrado no repositório [Front End](https://github.com/domii9k/BookFlow-FrontEnd).
+Este README aborda algumas instruções de execução do código do Projeto BookFlow (back-end api) [ATUALIZADO]. O front-end do projeto pode ser encontrado no repositório [Front End](https://github.com/domii9k/frontend_bookflow).
 
 ### ✔ Considerações:
 
 1) O projeto foi removido do Render, devido à lentidão que a plataforma o coloca, por ser gratuito.
 2) As novas instruções serão para rodar o projeto localmente.
-3) O front-end ainda não possui atualizações, e estas estão programadas para dar continuação no final de outubro.
-4) Implementação de acesso/Login está programada para o começo de outubro.
 
 ### 🛠 Ferramentas
 Para as requisições, foi utilizado o <i>Insomnia</i>, mas pode ser utilizado o “software” da sua preferência. Caso queira utilizar um navegador para as requisições GET, recomenda-se o Firefox, pois ele traz as requisições visivelmente mais atraentes.
@@ -44,7 +42,7 @@ Após lançar a requisição, é necessário copiar o _**token**_ que será gera
 
 ### Cadastro de usuários
 
-Somente um usuário Adminostrador pode realizar o cadastro de novos usuários.
+Somente um usuário Administrador pode realizar o cadastro de novos usuários.
 
 URL: https://localhost:9000/auth/registro
 
@@ -169,8 +167,8 @@ No Insomnia, selecione a opção de requisição DELETE e insira o link + /{id}.
 Caso bem sucedido, será retornado o status 204 - _NO_CONTENT_
 
 Pronto! Requisições realizadas com sucesso. \
-Veja o README do front para informações sobre o mesmo no repositório [Front End](https://github.com/domii9k/BookFlow-FrontEnd). \
->>> 🚨 Para visualizar o corpo JSON de cada tabela para requisições de cadastro, clique _[aqui](https://github.com/domii9k/bookflow/blob/main/orientacoes/REQUISICOES.md)_.
+Veja o README do front para informações sobre o mesmo no repositório [Front End](https://github.com/domii9k/frontend_bookflow). \
+> 🚨 Para visualizar o corpo JSON de cada tabela para requisições de cadastro, clique _[aqui](https://github.com/domii9k/bookflow/blob/main/orientacoes/REQUISICOES.md)_.
 
 #### 📆 Cronograma de Desenvolvimento 2024/2:
 
