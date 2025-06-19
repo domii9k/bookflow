@@ -1,4 +1,4 @@
-## 📝 Instruções de execução do código (2024/2)
+## 📝 Instruções de execução do código (2025/1)
 
 Este README aborda algumas instruções de execução do código do Projeto BookFlow (back-end api) [ATUALIZADO]. O front-end do projeto pode ser encontrado no repositório [Front End](https://github.com/domii9k/frontend_bookflow).
 
@@ -170,15 +170,6 @@ Caso bem sucedido, será retornado o status 204 - _NO_CONTENT_
 Pronto! Requisições realizadas com sucesso. \
 Veja o README do front para informações sobre o mesmo no repositório [Front End](https://github.com/domii9k/frontend_bookflow). \
 > 🚨 Para visualizar o corpo JSON de cada tabela para requisições de cadastro, clique _[aqui](https://github.com/domii9k/bookflow/blob/main/orientacoes/REQUISICOES.md)_.
-
-#### 📆 Cronograma de Desenvolvimento 2024/2:
-
-| Mês       | Atividade                                                                                     |
-|:---------:|:----------------------------------------------------------------------------------------------|
-| Agosto    | Finalizar CRUD das tabelas do Sistema                                                         |
-| Setembro  | Aplicar regras de negócio (expiração do empréstimo, validação de livros e alunos e etc)       |
-| Outubro   | Aplicar autenticação de usuários e permissões de acesso às rotas (Spring Security)            |
-| Novembro  | FrontEnd - finalizar telas e autenticação de usuários                                         |
-| Dezembro  | FrontEnd - finalizar telas / realização dos testes                                            |
+ |
 
 
