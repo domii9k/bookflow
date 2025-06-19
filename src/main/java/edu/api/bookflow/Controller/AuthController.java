@@ -3,7 +3,10 @@ package edu.api.bookflow.Controller;
 import edu.api.bookflow.Configuration.AuthConfig.TokenProvider;
 import edu.api.bookflow.DTO.AuthDTO;
 import edu.api.bookflow.DTO.LoginResponseDTO;
+import edu.api.bookflow.DTO.Mapper.LoginMapper;
+import edu.api.bookflow.DTO.Mapper.UsuarioMapper;
 import edu.api.bookflow.DTO.UsuarioDTO;
+import edu.api.bookflow.Model.AuthModel;
 import edu.api.bookflow.Model.Usuario;
 import edu.api.bookflow.Repository.UsuarioRepository;
 import edu.api.bookflow.Services.UsuarioService;
@@ -27,14 +30,21 @@ public class AuthController {
     TokenProvider tokenProvider;
     @Autowired
     UsuarioService usuarioService;
+    @Autowired
+    LoginMapper loginMapper;
+    @Autowired
+    private UsuarioMapper usuarioMapper;
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody @Valid AuthDTO dto) {
         var emailSenha = new UsernamePasswordAuthenticationToken(dto.email(), dto.senha());
         var auth = this.authenticationManager.authenticate(emailSenha);
         var token = tokenProvider.generateAccessToken((Usuario) auth.getPrincipal());
+        AuthModel model = loginMapper.convertToModel(dto);
+        Usuario usuario = (Usuario) usuarioRepository.findByEmail(model.getEmail());
+        UsuarioDTO usuarioDTO = usuarioMapper.convertToDto(usuario);
 
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        return ResponseEntity.ok(new LoginResponseDTO(token, usuarioDTO));
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)

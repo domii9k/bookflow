@@ -1,4 +1,5 @@
 package edu.api.bookflow.DTO;
 
-public record LoginResponseDTO(String token) {
+public record LoginResponseDTO(String token, UsuarioDTO usuario) {
+
 }
