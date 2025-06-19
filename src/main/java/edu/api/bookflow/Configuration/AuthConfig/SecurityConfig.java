@@ -35,7 +35,11 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/registro").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/registro").hasRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.GET, "/usuarios", "/usuarios/{id}").hasRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.DELETE, "/usuarios/{id}", "/alunos/{id}").hasRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.PATCH, "/alunos/{id}/desativar", "/usuarios/{id}/desativar", "/alunos/{id}/ativar", "/usuarios/{id}/ativar", "/usuarios/{id}").hasRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.PUT, "/usuarios/{id}").hasRole("ADMINISTRADOR")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
